@@ -162,8 +162,8 @@ export default function BlogManager() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setIsModalOpen(false)}></div>
 
-                    <div className="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col">
-                        <form onSubmit={handleSave} className="flex flex-col h-full">
+                    <div className="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+                        <form onSubmit={handleSave} className="flex flex-col h-full overflow-hidden">
                             {/* Header - Fixed */}
                             <div className="px-6 py-4 border-b border-gray-200">
                                 <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -172,7 +172,7 @@ export default function BlogManager() {
                             </div>
 
                             {/* Scrollable Content */}
-                            <div className="flex-1 overflow-y-scroll px-6 py-4 min-h-0 overscroll-contain">
+                            <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
                                 <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                                     <div className="sm:col-span-4">
                                         <label className="block text-sm font-medium text-gray-700">Título</label>

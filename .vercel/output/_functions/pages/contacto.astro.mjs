@@ -1,6 +1,6 @@
 import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead, l as renderScript } from '../chunks/astro/server_DKXoufgr.mjs';
 import 'piccolore';
-import { $ as $$Layout } from '../chunks/Layout_D5SvoyTE.mjs';
+import { $ as $$Layout } from '../chunks/Layout_0sKRk8TO.mjs';
 import { $ as $$CTAWhatsApp } from '../chunks/CTAWhatsApp_Csy7W9Qh.mjs';
 /* empty css                                    */
 export { renderers } from '../renderers.mjs';

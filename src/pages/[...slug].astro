@@ -41,19 +41,19 @@ if (error || !service) {
                 id="hero-image"
             />
             <div
-                class="absolute inset-0 bg-gradient-to-b from-brown-900/70 via-brown-800/50 to-cream-50"
+                class="absolute inset-0 bg-gradient-to-b from-brown-900/80 via-brown-800/60 to-cream-50"
             >
             </div>
         </div>
         <div class="text-center z-10 px-4 max-w-4xl mx-auto">
             <h1
-                class="font-serif text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-6 text-cream-50 reveal-text opacity-0"
+                class="font-serif text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-6 text-cream-50 reveal-text opacity-0 drop-shadow-lg"
             >
                 {service.hero_title}
             </h1>
             {
                 service.hero_subtitle && (
-                    <p class="text-lg sm:text-xl md:text-2xl font-light text-cream-100 mb-8 reveal-text opacity-0">
+                    <p class="text-base sm:text-xl md:text-2xl font-light text-cream-100 mb-8 reveal-text opacity-0 drop-shadow-md">
                         {service.hero_subtitle}
                     </p>
                 )

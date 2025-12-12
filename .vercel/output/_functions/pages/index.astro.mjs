@@ -1,6 +1,6 @@
 import { e as createComponent, f as createAstro, m as maybeRenderHead, h as addAttribute, v as renderSlot, l as renderScript, r as renderTemplate, k as renderComponent } from '../chunks/astro/server_DKXoufgr.mjs';
 import 'piccolore';
-import { $ as $$Layout } from '../chunks/Layout_D5SvoyTE.mjs';
+import { $ as $$Layout } from '../chunks/Layout_0sKRk8TO.mjs';
 import { $ as $$CTAWhatsApp } from '../chunks/CTAWhatsApp_Csy7W9Qh.mjs';
 import 'clsx';
 import { $ as $$Testimonials } from '../chunks/Testimonials_CSYJuceG.mjs';
