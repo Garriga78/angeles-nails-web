@@ -208,17 +208,17 @@ export default function ServiceManager() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setIsModalOpen(false)}></div>
 
-                    <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+                    <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col pointer-events-auto">
                         <form onSubmit={handleSave} className="flex flex-col h-full">
                             {/* Header - Fixed */}
-                            <div className="px-6 py-4 border-b border-gray-200">
+                            <div className="px-6 py-4 border-b border-gray-200 bg-white rounded-t-lg z-10 shrink-0">
                                 <h3 className="text-lg leading-6 font-medium text-gray-900">
                                     {editingService.id ? 'Editar Servicio' : 'Nuevo Servicio'}
                                 </h3>
                             </div>
 
                             {/* Scrollable Content */}
-                            <div className="flex-1 overflow-y-scroll px-6 py-4 min-h-0 overscroll-contain">
+                            <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0 overscroll-contain">
 
                                 {/* Tabs */}
                                 <div className="border-b border-gray-200 mb-6">
@@ -399,176 +399,4 @@ export default function ServiceManager() {
                                             <div className="border-t pt-4">
                                                 <h4 className="font-medium text-gray-900 mb-3">Feature 2</h4>
                                                 <div className="grid grid-cols-1 gap-3">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Título"
-                                                        value={editingService.feature_2_title || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, feature_2_title: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                    <textarea
-                                                        rows={2}
-                                                        placeholder="Descripción"
-                                                        value={editingService.feature_2_description || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, feature_2_description: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="border-t pt-4">
-                                                <h4 className="font-medium text-gray-900 mb-3">Feature 3</h4>
-                                                <div className="grid grid-cols-1 gap-3">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Título"
-                                                        value={editingService.feature_3_title || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, feature_3_title: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                    <textarea
-                                                        rows={2}
-                                                        placeholder="Descripción"
-                                                        value={editingService.feature_3_description || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, feature_3_description: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </>
-                                    )}
-
-                                    {activeTab === 'process' && (
-                                        <>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700">Título Sección Proceso</label>
-                                                <input
-                                                    type="text"
-                                                    value={editingService.process_title || 'Paso a paso'}
-                                                    onChange={(e) => setEditingService({ ...editingService, process_title: e.target.value })}
-                                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                />
-                                            </div>
-
-                                            <div className="border-t pt-4">
-                                                <h4 className="font-medium text-gray-900 mb-3">Paso 1</h4>
-                                                <div className="grid grid-cols-1 gap-3">
-                                                    <div>
-                                                        <label className="block text-sm font-medium text-gray-700 mb-2">Icono SVG</label>
-                                                        <SVGUploader
-                                                            onUpload={(url) => setEditingService({ ...editingService, process_step_1_icon: url })}
-                                                            currentSVG={editingService.process_step_1_icon}
-                                                        />
-                                                    </div>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Título"
-                                                        value={editingService.process_step_1_title || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, process_step_1_title: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                    <textarea
-                                                        rows={2}
-                                                        placeholder="Descripción"
-                                                        value={editingService.process_step_1_description || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, process_step_1_description: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="border-t pt-4">
-                                                <h4 className="font-medium text-gray-900 mb-3">Paso 2</h4>
-                                                <div className="grid grid-cols-1 gap-3">
-                                                    <div>
-                                                        <label className="block text-sm font-medium text-gray-700 mb-2">Icono SVG</label>
-                                                        <SVGUploader
-                                                            onUpload={(url) => setEditingService({ ...editingService, process_step_2_icon: url })}
-                                                            currentSVG={editingService.process_step_2_icon}
-                                                        />
-                                                    </div>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Título"
-                                                        value={editingService.process_step_2_title || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, process_step_2_title: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                    <textarea
-                                                        rows={2}
-                                                        placeholder="Descripción"
-                                                        value={editingService.process_step_2_description || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, process_step_2_description: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="border-t pt-4">
-                                                <h4 className="font-medium text-gray-900 mb-3">Paso 3</h4>
-                                                <div className="grid grid-cols-1 gap-3">
-                                                    <div>
-                                                        <label className="block text-sm font-medium text-gray-700 mb-2">Icono SVG</label>
-                                                        <SVGUploader
-                                                            onUpload={(url) => setEditingService({ ...editingService, process_step_3_icon: url })}
-                                                            currentSVG={editingService.process_step_3_icon}
-                                                        />
-                                                    </div>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Título"
-                                                        value={editingService.process_step_3_title || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, process_step_3_title: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                    <textarea
-                                                        rows={2}
-                                                        placeholder="Descripción"
-                                                        value={editingService.process_step_3_description || ''}
-                                                        onChange={(e) => setEditingService({ ...editingService, process_step_3_description: e.target.value })}
-                                                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </>
-                                    )}
-
-                                    {activeTab === 'seo' && (
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700">Contenido SEO (Texto final)</label>
-                                            <textarea
-                                                rows={8}
-                                                value={editingService.seo_content || ''}
-                                                onChange={(e) => setEditingService({ ...editingService, seo_content: e.target.value })}
-                                                placeholder="Texto adicional para SEO que aparecerá al final de la página..."
-                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm font-mono text-xs"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Footer - Fixed */}
-                            <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 text-sm font-medium text-white bg-brown-800 border border-transparent rounded-md hover:bg-brown-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500"
-                                >
-                                    Guardar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
 
