@@ -7,9 +7,7 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel({
-    includeFiles: ['./node_modules/react/**', './node_modules/react-dom/**']
-  }),
+  adapter: vercel(),
   integrations: [
     tailwind({
       applyBaseStyles: false,
