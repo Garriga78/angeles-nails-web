@@ -1,0 +1,262 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CTAWhatsApp from "../../components/CTAWhatsApp.astro";
+import Testimonials from "../../components/Testimonials.astro";
+import { gsap } from "gsap";
+---
+
+<Layout
+    title="Tratamientos Capilares en Murcia | Angeles Nails Studio"
+    description="Tratamientos capilares en Murcia. Hidratación, botox capilar y reconstrucción para un cabello sano y brillante."
+>
+    <CTAWhatsApp
+        message="Hola, quiero reservar una cita para tratamiento capilar"
+    />
+
+    <!-- Hero Section -->
+    <section
+        class="relative h-[60vh] flex items-center justify-center overflow-hidden pt-32"
+    >
+        <div class="absolute inset-0 z-0">
+            <img
+                src="/img/placeholder.svg"
+                alt="Tratamientos Capilares en Murcia"
+                class="w-full h-full object-cover"
+                id="hero-image"
+            />
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-brown-900/70 via-brown-800/50 to-cream-50"
+            >
+            </div>
+        </div>
+        <div class="text-center z-10 px-4 max-w-4xl mx-auto">
+            <h1
+                class="font-serif text-5xl md:text-7xl font-bold mb-6 text-cream-50 reveal-text opacity-0"
+            >
+                Tratamientos <span class="text-gold-400">capilares</span>
+            </h1>
+            <p
+                class="text-xl md:text-2xl font-light text-cream-100 mb-8 reveal-text opacity-0"
+            >
+                Salud y brillo para tu cabello
+            </p>
+        </div>
+    </section>
+
+    <!-- Intro Section (Cream-50) -->
+    <section class="py-20 bg-cream-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2
+                class="text-3xl md:text-4xl font-serif font-bold text-brown-800 mb-8 reveal-text opacity-0"
+            >
+                Recupera la vitalidad de tu melena
+            </h2>
+            <p
+                class="text-xl text-brown-600 leading-relaxed reveal-text opacity-0"
+            >
+                El estrés, el sol y las herramientas de calor dañan tu cabello.
+                Nuestros **tratamientos capilares** (Botox, hidratación
+                profunda, reconstrucción) están diseñados para devolverle la
+                fuerza, el brillo y la suavidad perdida. Utilizamos productos de
+                alta gama que penetran en la fibra capilar para resultados
+                visibles desde la primera sesión.
+            </p>
+        </div>
+    </section>
+
+    <!-- Benefits Section (White) -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="relative reveal-element opacity-0">
+                    <div class="overflow-hidden rounded-lg shadow-xl h-[500px]">
+                        <img
+                            src="/img/placeholder.svg"
+                            alt="Beneficios Tratamientos Capilares"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div
+                        class="absolute -bottom-6 -right-6 w-32 h-32 bg-gold-100 rounded-full -z-10"
+                    >
+                    </div>
+                </div>
+                <div class="space-y-8 reveal-text opacity-0">
+                    <h2
+                        class="text-3xl md:text-4xl font-serif font-bold text-brown-800"
+                    >
+                        Beneficios inmediatos
+                    </h2>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <span
+                                class="flex-shrink-0 w-8 h-8 rounded-full bg-gold-200 flex items-center justify-center text-brown-800 font-bold"
+                                >1</span
+                            >
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-brown-800 mb-2"
+                                >
+                                    Hidratación profunda
+                                </h3>
+                                <p class="text-brown-600">
+                                    Adiós al encrespamiento y la sequedad. Tu
+                                    pelo se sentirá sedoso y manejable.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span
+                                class="flex-shrink-0 w-8 h-8 rounded-full bg-gold-200 flex items-center justify-center text-brown-800 font-bold"
+                                >2</span
+                            >
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-brown-800 mb-2"
+                                >
+                                    Reconstrucción
+                                </h3>
+                                <p class="text-brown-600">
+                                    Repara la fibra dañada desde el interior,
+                                    previniendo la rotura.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span
+                                class="flex-shrink-0 w-8 h-8 rounded-full bg-gold-200 flex items-center justify-center text-brown-800 font-bold"
+                                >3</span
+                            >
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-brown-800 mb-2"
+                                >
+                                    Brillo espejo
+                                </h3>
+                                <p class="text-brown-600">
+                                    Consigue una melena radiante que refleja la
+                                    luz y luce saludable.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process/Details Section (Cream-100) -->
+    <section class="py-20 bg-cream-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2
+                class="text-3xl md:text-4xl font-serif font-bold text-brown-800 mb-12 reveal-text opacity-0"
+            >
+                El proceso
+            </h2>
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-element opacity-0"
+            >
+                <div
+                    class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+                >
+                    <div class="text-4xl mb-4">🧴</div>
+                    <h3 class="text-xl font-bold text-brown-800 mb-3">
+                        Lavado
+                    </h3>
+                    <p class="text-brown-600 text-sm">
+                        Lavado con champú específico para abrir la cutícula y
+                        preparar el cabello.
+                    </p>
+                </div>
+                <div
+                    class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+                >
+                    <div class="text-4xl mb-4">💆‍♀️</div>
+                    <h3 class="text-xl font-bold text-brown-800 mb-3">
+                        Aplicación
+                    </h3>
+                    <p class="text-brown-600 text-sm">
+                        Aplicación del tratamiento mechón a mechón con un masaje
+                        relajante.
+                    </p>
+                </div>
+                <div
+                    class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+                >
+                    <div class="text-4xl mb-4">🔥</div>
+                    <h3 class="text-xl font-bold text-brown-800 mb-3">
+                        Sellado
+                    </h3>
+                    <p class="text-brown-600 text-sm">
+                        Uso de calor o plancha (según tratamiento) para sellar
+                        el producto en la fibra.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-12 reveal-text opacity-0">
+                <a
+                    href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Tratamiento%20Capilar"
+                    class="inline-block bg-brown-800 text-cream-50 px-10 py-4 rounded-full hover:bg-gold-500 hover:text-brown-900 transition-all duration-300 font-medium"
+                >
+                    Reservar cita ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <Testimonials />
+
+    <!-- Scripts -->
+    <script>
+        import { gsap } from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animation
+        gsap.to("#hero-image", {
+            scale: 1.1,
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom top",
+                scrub: 1,
+            },
+        });
+
+        // Reveal Text
+        gsap.utils.toArray(".reveal-text").forEach((element: any) => {
+            gsap.to(element, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                },
+            });
+        });
+
+        // Reveal Elements
+        gsap.utils.toArray(".reveal-element").forEach((element: any) => {
+            gsap.to(element, {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                },
+            });
+        });
+    </script>
+
+    <style>
+        .reveal-text,
+        .reveal-element {
+            transform: translateY(30px);
+        }
+    </style>
+</Layout>

@@ -1,0 +1,77 @@
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/lato/300.css';
+@import '@fontsource/lato/400.css';
+@import '@fontsource/lato/700.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-cream: #cdb996;
+        --color-brown: #6d5744;
+        --color-gold: #d4a574;
+        --font-serif: "Playfair Display", serif;
+        --font-sans: "Lato", sans-serif;
+    }
+
+    body {
+        margin: 0;
+        overflow-x: hidden;
+        background-color: #f5f1ea;
+        /* cream-100 */
+        color: #6d5744;
+        /* brown-600 */
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-serif);
+        color: #6d5744;
+        /* brown-600 */
+    }
+}
+
+/* Lenis Smooth Scroll */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+/* Custom Selection */
+::selection {
+    background-color: #d4a574;
+    color: #ffffff;
+}
+
+/* Progressive Loading Animations */
+.reveal-text,
+.reveal-element {
+    opacity: 0;
+    transform: translateY(30px);
+}
