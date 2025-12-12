@@ -6,11 +6,12 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: vercel({
-    webAnalytics: { enabled: true },
-    maxDuration: 10,
-  }),
-  integrations: [tailwind({
-    applyBaseStyles: false,
-  }), react()]
+  output: 'server',
+  adapter: vercel(),
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    react()
+  ]
 });
