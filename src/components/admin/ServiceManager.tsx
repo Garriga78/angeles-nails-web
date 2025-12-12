@@ -208,17 +208,17 @@ export default function ServiceManager() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setIsModalOpen(false)}></div>
 
-                    <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col pointer-events-auto">
+                    <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
                         <form onSubmit={handleSave} className="flex flex-col h-full">
                             {/* Header - Fixed */}
-                            <div className="px-6 py-4 border-b border-gray-200 bg-white rounded-t-lg z-10 shrink-0">
+                            <div className="px-6 py-4 border-b border-gray-200">
                                 <h3 className="text-lg leading-6 font-medium text-gray-900">
                                     {editingService.id ? 'Editar Servicio' : 'Nuevo Servicio'}
                                 </h3>
                             </div>
 
                             {/* Scrollable Content */}
-                            <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0 overscroll-contain">
+                            <div className="flex-1 overflow-y-scroll px-6 py-4 min-h-0 overscroll-contain">
 
                                 {/* Tabs */}
                                 <div className="border-b border-gray-200 mb-6">
