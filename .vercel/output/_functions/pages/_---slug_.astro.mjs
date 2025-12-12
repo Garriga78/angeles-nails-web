@@ -1,6 +1,6 @@
 import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute, l as renderScript, u as unescapeHTML } from '../chunks/astro/server_DKXoufgr.mjs';
 import 'piccolore';
-import { $ as $$Layout } from '../chunks/Layout_0sKRk8TO.mjs';
+import { $ as $$Layout } from '../chunks/Layout_9OUHQbHX.mjs';
 import { $ as $$CTAWhatsApp } from '../chunks/CTAWhatsApp_Csy7W9Qh.mjs';
 import { $ as $$Testimonials } from '../chunks/Testimonials_CSYJuceG.mjs';
 import { s as supabase } from '../chunks/supabase_D7TddHP9.mjs';
