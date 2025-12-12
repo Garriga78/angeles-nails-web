@@ -7,7 +7,10 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    maxDuration: 10,
+  }),
   integrations: [tailwind({
     applyBaseStyles: false,
   }), react()]
