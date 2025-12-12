@@ -1,0 +1,1 @@
+import{g as t}from"./index.DKtf60Sy.js";import{S as o}from"./ScrollTrigger.BWsqEc1I.js";t.registerPlugin(o);document.querySelectorAll(".parallax-section").forEach(r=>{const e=parseFloat(r.getAttribute("data-speed")||"0.1");t.to(r,{yPercent:20*e,ease:"none",scrollTrigger:{trigger:r,start:"top bottom",end:"bottom top",scrub:!0}})});
