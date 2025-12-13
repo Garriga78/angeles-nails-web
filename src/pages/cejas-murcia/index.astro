@@ -2,6 +2,18 @@
 import Layout from "../../layouts/Layout.astro";
 import CTAWhatsApp from "../../components/CTAWhatsApp.astro";
 import Testimonials from "../../components/Testimonials.astro";
+import { supabase } from "../../lib/supabase";
+
+// Fetch services from Supabase
+const { data: services, error } = await supabase
+    .from("services")
+    .select("*")
+    .eq("category", "cejas")
+    .order("display_order", { ascending: true });
+
+if (error) {
+    console.error("Error loading cejas services:", error);
+}
 ---
 
 <Layout
@@ -92,104 +104,46 @@ import Testimonials from "../../components/Testimonials.astro";
 
             <!-- Services List -->
             <div class="space-y-0">
-                <!-- Diseño de Cejas -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
+                {
+                    services && services.length > 0 ? (
+                        services.map((service) => (
+                            <div
+                                class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
+                                data-image={
+                                    service.hero_image_url ||
+                                    "/img/placeholder.svg"
+                                }
                             >
-                                <a
-                                    href="/cejas-murcia/diseno-cejas-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Diseño de cejas
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Estudio de visagismo y depilación precisa con
-                                hilo o cera.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Diseño%20de%20Cejas"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Laminado de Cejas -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/cejas-murcia/laminado-cejas-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Laminado de cejas
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Tratamiento para alisar, fijar y dar volumen a
-                                tus cejas.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Laminado%20de%20Cejas"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Tinte y Henna -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/cejas-murcia/tinte-henna-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Tinte y henna
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Definición y color natural para unas cejas más
-                                pobladas.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Tinte%20de%20Cejas"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
+                                <div class="flex items-center justify-between gap-12">
+                                    <div class="flex items-center gap-8 flex-1">
+                                        <h3 class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap">
+                                            <a
+                                                href={`/${service.slug}`}
+                                                class="block w-full h-full before:absolute before:inset-0"
+                                            >
+                                                {service.hero_title}
+                                            </a>
+                                        </h3>
+                                        <p class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-2">
+                                            {service.intro_description ||
+                                                service.hero_subtitle}
+                                        </p>
+                                    </div>
+                                    <a
+                                        href={`https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20${service.hero_title}`}
+                                        class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
+                                    >
+                                        Reservar
+                                    </a>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p class="text-center text-brown-600">
+                            No hay servicios disponibles en este momento.
+                        </p>
+                    )
+                }
             </div>
         </div>
     </section>
@@ -266,7 +220,10 @@ import Testimonials from "../../components/Testimonials.astro";
                 const image = element.getAttribute("data-image");
                 if (previewImage && preview) {
                     previewImage.src = image || "";
-                    gsap.to(preview, { opacity: 1, duration: 0.3 });
+                    gsap.to(preview, {
+                        opacity: 1,
+                        duration: 0.3,
+                    });
                 }
             });
 
@@ -281,7 +238,10 @@ import Testimonials from "../../components/Testimonials.astro";
 
             element.addEventListener("mouseleave", () => {
                 if (preview) {
-                    gsap.to(preview, { opacity: 0, duration: 0.3 });
+                    gsap.to(preview, {
+                        opacity: 0,
+                        duration: 0.3,
+                    });
                 }
             });
         });

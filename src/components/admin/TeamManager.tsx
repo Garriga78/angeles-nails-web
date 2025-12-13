@@ -21,6 +21,21 @@ export default function TeamManager() {
         fetchMembers();
     }, []);
 
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+        };
+    }, [isModalOpen]);
+
     const fetchMembers = async () => {
         setLoading(true);
         const { data, error } = await supabase

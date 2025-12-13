@@ -2,6 +2,18 @@
 import Layout from "../../layouts/Layout.astro";
 import CTAWhatsApp from "../../components/CTAWhatsApp.astro";
 import Testimonials from "../../components/Testimonials.astro";
+import { supabase } from "../../lib/supabase";
+
+// Fetch services from Supabase
+const { data: services, error } = await supabase
+    .from("services")
+    .select("*")
+    .eq("category", "manicura")
+    .order("display_order", { ascending: true });
+
+if (error) {
+    console.error("Error loading manicura services:", error);
+}
 ---
 
 <Layout
@@ -51,9 +63,9 @@ import Testimonials from "../../components/Testimonials.astro";
             >
                 En <strong>Angeles Nails Studio</strong>, la manicura no es solo
                 un servicio, es un <strong>ritual de autocuidado</strong> diseñado
-                para que tus manos luzcan impecables durante semanas. Desde uñas
-                naturales hasta las técnicas más avanzadas en polygel, cada tratamiento
-                se realiza con la máxima atención al detalle.
+                para que tus manos luzcan impecables durante semanas. Desde uñas naturales
+                hasta las técnicas más avanzadas en polygel, cada tratamiento se realiza
+                con la máxima atención al detalle.
             </p>
             <p
                 class="text-lg text-brown-600 leading-relaxed reveal-text opacity-0"
@@ -99,236 +111,46 @@ import Testimonials from "../../components/Testimonials.astro";
 
             <!-- Services List -->
             <div class="space-y-0">
-                <!-- Uñas Naturales -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
+                {
+                    services && services.length > 0 ? (
+                        services.map((service) => (
+                            <div
+                                class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
+                                data-image={
+                                    service.hero_image_url ||
+                                    "/img/placeholder.svg"
+                                }
                             >
-                                <a
-                                    href="/manicura-murcia/unas-naturales-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Uñas naturales
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Manicura clásica con limado, cuidado de
-                                cutículas y esmaltado tradicional.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Uñas%20Naturales"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Semipermanente -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/manicura-murcia/semipermanente-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Semipermanente
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Esmalte de larga duración que resiste hasta 3
-                                semanas sin descascarillarse.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Uñas%20Semipermanente"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Soft Gel -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/manicura-murcia/soft-gel-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Soft gel
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Gel flexible que refuerza la uña natural sin
-                                dañarla.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Soft%20Gel"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Polygel -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/manicura-murcia/polygel-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Polygel
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                La técnica más avanzada que combina lo mejor del
-                                gel y el acrílico.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Polygel"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Retirada Polygel -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/manicura-murcia/retirada-polygel-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Retirada polygel
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Retirada profesional y segura de polygel sin
-                                dañar la uña natural.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Retirada%20Polygel"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Retirada Permanente -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/manicura-murcia/retirada-permanente-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Retirada permanente
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Eliminación cuidadosa del esmalte semipermanente
-                                respetando la salud de tus uñas.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Retirada%20Permanente"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Manicura Hombres -->
-                <div
-                    class="service-list-item border-b border-gold-200/30 py-8 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50 relative"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between gap-12">
-                        <div class="flex items-center gap-8 flex-1">
-                            <h3
-                                class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap"
-                            >
-                                <a
-                                    href="/manicura-murcia/manicura-hombres-murcia"
-                                    class="block w-full h-full before:absolute before:inset-0"
-                                >
-                                    Manicura hombres
-                                </a>
-                            </h3>
-                            <p
-                                class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            >
-                                Cuidado profesional de manos y uñas adaptado
-                                para hombres.
-                            </p>
-                        </div>
-                        <a
-                            href="https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20Manicura%20para%20Hombres"
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
-                        >
-                            Reservar
-                        </a>
-                    </div>
-                </div>
+                                <div class="flex items-center justify-between gap-12">
+                                    <div class="flex items-center gap-8 flex-1">
+                                        <h3 class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap">
+                                            <a
+                                                href={`/${service.slug}`}
+                                                class="block w-full h-full before:absolute before:inset-0"
+                                            >
+                                                {service.hero_title}
+                                            </a>
+                                        </h3>
+                                        <p class="text-brown-600 text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-2">
+                                            {service.intro_description ||
+                                                service.hero_subtitle}
+                                        </p>
+                                    </div>
+                                    <a
+                                        href={`https://wa.me/34613302914?text=Hola,%20quiero%20reservar%20${service.hero_title}`}
+                                        class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-brown-700 text-cream-50 px-6 py-2 rounded-full hover:bg-gold-500 text-sm font-medium whitespace-nowrap relative z-10"
+                                    >
+                                        Reservar
+                                    </a>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p class="text-center text-brown-600">
+                            No hay servicios disponibles en este momento.
+                        </p>
+                    )
+                }
             </div>
 
             <!-- CTA Section -->
