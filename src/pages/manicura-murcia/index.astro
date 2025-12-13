@@ -4,6 +4,14 @@ import CTAWhatsApp from "../../components/CTAWhatsApp.astro";
 import Testimonials from "../../components/Testimonials.astro";
 import { supabase } from "../../lib/supabase";
 
+// Force no-cache for Vercel SSR to ensure real-time updates
+Astro.response.headers.set(
+    "Cache-Control",
+    "no-cache, no-store, must-revalidate",
+);
+Astro.response.headers.set("Pragma", "no-cache");
+Astro.response.headers.set("Expires", "0");
+
 // Fetch services from Supabase
 const { data: services, error } = await supabase
     .from("services")

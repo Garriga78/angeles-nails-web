@@ -7,6 +7,14 @@ import { supabase } from "../lib/supabase";
 // Get the slug from the URL
 const { slug } = Astro.params;
 
+// Force no-cache to ensure real-time updates
+Astro.response.headers.set(
+    "Cache-Control",
+    "no-cache, no-store, must-revalidate",
+);
+Astro.response.headers.set("Pragma", "no-cache");
+Astro.response.headers.set("Expires", "0");
+
 // Fetch service data from Supabase
 const { data: service, error } = await supabase
     .from("services")
