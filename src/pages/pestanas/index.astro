@@ -25,6 +25,15 @@ if (error) {
 
 // Get first service image for SEO
 const seoImage = services?.[0]?.hero_image_url;
+
+// Fetch category text
+const { data: categoryData } = await supabase
+    .from("categories")
+    .select("seo_text")
+    .eq("slug", "pestanas")
+    .single();
+
+const dynamicSeoText = categoryData?.seo_text;
 ---
 
 <Layout
@@ -70,14 +79,23 @@ const seoImage = services?.[0]?.hero_image_url;
     <!-- Introducción -->
     <section class="py-16 bg-cream-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p
-                class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0"
-            >
-                Olvídate del rímel. En <strong>Angeles Nails Studio</strong>,
-                somos especialistas en realzar tu mirada con técnicas seguras y
-                materiales de alta calidad. Ya busques un efecto natural o un
-                volumen glamuroso, tenemos la técnica perfecta para ti.
-            </p>
+            {
+                dynamicSeoText ? (
+                    <div
+                        class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0 prose prose-brown max-w-none"
+                        set:html={dynamicSeoText}
+                    />
+                ) : (
+                    <p class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0">
+                        Olvídate del rímel. En{" "}
+                        <strong>Angeles Nails Studio</strong>, somos
+                        especialistas en realzar tu mirada con técnicas seguras
+                        y materiales de alta calidad. Ya busques un efecto
+                        natural o un volumen glamuroso, tenemos la técnica
+                        perfecta para ti.
+                    </p>
+                )
+            }
         </div>
     </section>
 

@@ -25,11 +25,20 @@ if (error) {
 
 // Get first service image for SEO
 const seoImage = services?.[0]?.hero_image_url;
+
+// Fetch category text
+const { data: categoryData } = await supabase
+    .from("categories")
+    .select("seo_text")
+    .eq("slug", "cejas")
+    .single();
+
+const dynamicSeoText = categoryData?.seo_text;
 ---
 
 <Layout
-    title="Diseño de Cejas en Murcia | Laminado y Depilación - Angeles Nails"
-    description="Expertos en cejas en Murcia. Diseño de mirada, depilación con hilo y laminado de cejas para realzar tu belleza natural."
+    title="Cejas en Murcia | Diseño y Laminado - Angeles Nails Studio"
+    description="Expertas en diseño de cejas, laminado, tinte y henna en Murcia. Realza tu mirada con tratamientos personalizados que equilibran tus facciones."
     image={seoImage}
 >
     <CTAWhatsApp message="Hola, quiero reservar una cita para cejas" />
@@ -41,7 +50,7 @@ const seoImage = services?.[0]?.hero_image_url;
         <div class="absolute inset-0 z-0">
             <img
                 src="/img/placeholder.svg"
-                alt="Cejas en Murcia"
+                alt="Diseño de cejas en Murcia"
                 class="w-full h-full object-cover"
             />
             <div
@@ -62,7 +71,7 @@ const seoImage = services?.[0]?.hero_image_url;
             <p
                 class="text-xl md:text-2xl font-light text-cream-100 mb-8 hero-subtitle opacity-0"
             >
-                El marco ideal para tu mirada
+                El marco de tu mirada
             </p>
         </div>
     </section>
@@ -70,15 +79,23 @@ const seoImage = services?.[0]?.hero_image_url;
     <!-- Introducción -->
     <section class="py-16 bg-cream-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p
-                class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0"
-            >
-                Tus cejas definen tu expresión. En <strong
-                    >Angeles Nails Studio</strong
-                >, realizamos un estudio de visagismo para encontrar la forma
-                perfecta que armonice con tus facciones. Desde depilación con
-                hilo hasta laminado de tendencia.
-            </p>
+            {
+                dynamicSeoText ? (
+                    <div
+                        class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0 prose prose-brown max-w-none"
+                        set:html={dynamicSeoText}
+                    />
+                ) : (
+                    <p class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0">
+                        Las cejas son el marco de la cara. En{" "}
+                        <strong>Angeles Nails Studio</strong>, estudiamos tus
+                        facciones para crear el diseño perfecto que realce tu
+                        belleza natural. Desde depilación con hilo hasta
+                        laminado y tinte, logramos resultados definidos y
+                        elegantes.
+                    </p>
+                )
+            }
         </div>
     </section>
 

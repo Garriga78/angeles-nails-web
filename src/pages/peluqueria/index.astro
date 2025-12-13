@@ -25,6 +25,15 @@ if (error) {
 
 // Get first service image for SEO
 const seoImage = services?.[0]?.hero_image_url;
+
+// Fetch category text
+const { data: categoryData } = await supabase
+    .from("categories")
+    .select("seo_text")
+    .eq("slug", "peluqueria")
+    .single();
+
+const dynamicSeoText = categoryData?.seo_text;
 ---
 
 <Layout
@@ -70,16 +79,23 @@ const seoImage = services?.[0]?.hero_image_url;
     <!-- Introducción -->
     <section class="py-16 bg-cream-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p
-                class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0"
-            >
-                Tu cabello es tu mejor accesorio. En <strong
-                    >Angeles Nails Studio</strong
-                >, nos enfocamos en la
-                <strong>salud capilar</strong>. Ofrecemos tratamientos profundos
-                de recuperación, alisados orgánicos y peinados que te harán
-                sentir segura y hermosa.
-            </p>
+            {
+                dynamicSeoText ? (
+                    <div
+                        class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0 prose prose-brown max-w-none"
+                        set:html={dynamicSeoText}
+                    />
+                ) : (
+                    <p class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0">
+                        Tu cabello es tu mejor accesorio. En{" "}
+                        <strong>Angeles Nails Studio</strong>, nos enfocamos en
+                        la
+                        <strong>salud capilar</strong>. Ofrecemos tratamientos
+                        profundos de recuperación, alisados orgánicos y peinados
+                        que te harán sentir segura y hermosa.
+                    </p>
+                )
+            }
         </div>
     </section>
 
