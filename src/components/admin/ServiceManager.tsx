@@ -43,6 +43,7 @@ export default function ServiceManager() {
     const [editingService, setEditingService] = useState<Partial<Service> | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeTab, setActiveTab] = useState<'basic' | 'hero' | 'intro' | 'features' | 'process' | 'seo'>('basic');
+    const [filterCategory, setFilterCategory] = useState<string>('all');
 
     useEffect(() => {
         fetchServices();
@@ -162,50 +163,134 @@ export default function ServiceManager() {
 
     if (loading) return <div>Cargando servicios...</div>;
 
+    // Filter and Group Services
+    const filteredServices = filterCategory === 'all'
+        ? services
+        : services.filter(s => s.category === filterCategory);
+
+    // Group only if showing all, otherwise just show list
+    const groupedServices: Record<string, Service[]> = {};
+    if (filterCategory === 'all') {
+        filteredServices.forEach(service => {
+            if (!groupedServices[service.category]) {
+                groupedServices[service.category] = [];
+            }
+            groupedServices[service.category].push(service);
+        });
+    }
+
+    const categoriesOrder = ['manicura', 'pedicura', 'cejas', 'pestanas', 'peluqueria'];
+
     return (
         <div>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h2 className="text-xl font-semibold text-gray-800">Listado de Servicios</h2>
-                <button
-                    onClick={() => openModal()}
-                    className="bg-brown-800 hover:bg-brown-900 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                    + Nuevo Servicio
-                </button>
+
+                <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <select
+                        value={filterCategory}
+                        onChange={(e) => setFilterCategory(e.target.value)}
+                        className="border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 text-sm"
+                    >
+                        <option value="all">Todas las categorías</option>
+                        <option value="manicura">Manicura</option>
+                        <option value="pedicura">Pedicura</option>
+                        <option value="cejas">Cejas</option>
+                        <option value="pestanas">Pestañas</option>
+                        <option value="peluqueria">Peluquería</option>
+                    </select>
+
+                    <button
+                        onClick={() => openModal()}
+                        className="bg-brown-800 hover:bg-brown-900 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
+                    >
+                        + Nuevo Servicio
+                    </button>
+                </div>
             </div>
 
-            <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Slug</th>
-                            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {services.map((service) => (
-                            <tr key={service.id}>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="h-12 w-16 bg-gray-100 rounded overflow-hidden">
-                                        {service.hero_image_url ? (
-                                            <img src={service.hero_image_url} alt="" className="h-full w-full object-cover" />
-                                        ) : <span className="flex items-center justify-center h-full text-xs text-gray-400">Sin img</span>}
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{service.hero_title}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{service.category}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono text-xs">{service.slug}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button onClick={() => openModal(service)} className="text-gold-600 hover:text-gold-900 mr-4">Editar</button>
-                                    <button onClick={() => handleDelete(service.id)} className="text-red-600 hover:text-red-900">Eliminar</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div className="space-y-8">
+                {filterCategory === 'all' ? (
+                    categoriesOrder.map(category => {
+                        const categoryServices = groupedServices[category as any];
+                        if (!categoryServices || categoryServices.length === 0) return null;
+
+                        return (
+                            <div key={category} className="bg-white rounded-lg shadow overflow-hidden">
+                                <div className="bg-gray-50 px-6 py-3 border-b border-gray-200">
+                                    <h3 className="text-lg font-medium text-gray-900 capitalize">{category}</h3>
+                                </div>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full divide-y divide-gray-200">
+                                        <thead className="bg-gray-50">
+                                            <tr>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Imagen</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Slug</th>
+                                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {categoryServices.map((service) => (
+                                                <tr key={service.id} className="hover:bg-gray-50">
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <div className="h-12 w-16 bg-gray-100 rounded overflow-hidden">
+                                                            {service.hero_image_url ? (
+                                                                <img src={service.hero_image_url} alt="" className="h-full w-full object-cover" />
+                                                            ) : <span className="flex items-center justify-center h-full text-xs text-gray-400">Sin img</span>}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{service.hero_title}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono text-xs">{service.slug}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <button onClick={() => openModal(service)} className="text-gold-600 hover:text-gold-900 mr-4">Editar</button>
+                                                        <button onClick={() => handleDelete(service.id)} className="text-red-600 hover:text-red-900">Eliminar</button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Imagen</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Slug</th>
+                                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {filteredServices.map((service) => (
+                                        <tr key={service.id} className="hover:bg-gray-50">
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="h-12 w-16 bg-gray-100 rounded overflow-hidden">
+                                                    {service.hero_image_url ? (
+                                                        <img src={service.hero_image_url} alt="" className="h-full w-full object-cover" />
+                                                    ) : <span className="flex items-center justify-center h-full text-xs text-gray-400">Sin img</span>}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{service.hero_title}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{service.category}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono text-xs">{service.slug}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button onClick={() => openModal(service)} className="text-gold-600 hover:text-gold-900 mr-4">Editar</button>
+                                                <button onClick={() => handleDelete(service.id)} className="text-red-600 hover:text-red-900">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {isModalOpen && editingService && (

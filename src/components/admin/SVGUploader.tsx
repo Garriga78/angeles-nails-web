@@ -65,8 +65,18 @@ export default function SVGUploader({ onUpload, currentSVG }: SVGUploaderProps) 
                 </label>
                 {currentSVG && (
                     <div className="flex items-center gap-2">
-                        <div className="w-12 h-12 bg-gray-50 rounded border border-gray-200 flex items-center justify-center p-1">
+                        <div className="w-12 h-12 bg-gray-50 rounded border border-gray-200 flex items-center justify-center p-1 relative group">
                             <img src={currentSVG} alt="SVG preview" className="w-full h-full object-contain" />
+                            <button
+                                type="button"
+                                onClick={() => onUpload('')}
+                                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 shadow-sm hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 z-10"
+                                title="Eliminar SVG"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                            </button>
                         </div>
                         <span className="text-xs text-gray-500">SVG actual</span>
                     </div>

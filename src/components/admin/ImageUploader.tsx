@@ -48,12 +48,22 @@ export default function ImageUploader({ onUpload, currentImage, bucketName = 'im
     return (
         <div className="space-y-4">
             {currentImage && (
-                <div className="relative w-40 h-40 overflow-hidden rounded-lg shadow-md border border-gray-200">
+                <div className="relative w-40 h-40 overflow-hidden rounded-lg shadow-md border border-gray-200 group">
                     <img
                         src={currentImage}
                         alt="Vista previa"
                         className="w-full h-full object-cover"
                     />
+                    <button
+                        type="button"
+                        onClick={() => onUpload('')}
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 shadow-sm hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                        title="Eliminar imagen"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                    </button>
                 </div>
             )}
 
