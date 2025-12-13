@@ -35,6 +35,18 @@ if (error || !service) {
     );
     return Astro.redirect("/404");
 }
+
+// Enforce Canonical URL (Strict Redirect Logic)
+// Construct the canonical path: /category/slug
+const canonicalPath = `/${service.category}/${service.slug}`;
+const currentPath = Astro.url.pathname;
+
+// Check if the current path matches the canonical path
+// We use 'endsWith' or direct comparison depending on trailing slashes, but Astro handles that.
+// Let's do a strict comparison but normalized.
+if (currentPath.replace(/\/$/, "") !== canonicalPath.replace(/\/$/, "")) {
+    return Astro.redirect(canonicalPath, 301);
+}
 ---
 
 <Layout
