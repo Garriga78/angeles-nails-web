@@ -16,19 +16,19 @@ Astro.response.headers.set("Expires", "0");
 const { data: services, error } = await supabase
     .from("services")
     .select("*")
-    .eq("category", "peluqueria")
+    .eq("category", "pestanas")
     .order("display_order", { ascending: true });
 
 if (error) {
-    console.error("Error loading peluqueria services:", error);
+    console.error("Error loading pestanas services:", error);
 }
 ---
 
 <Layout
-    title="Peluquería en Murcia | Tratamientos Capilares - Angeles Nails Studio"
-    description="Servicios de peluquería en Murcia: tratamientos de hidratación, botox capilar, alisados y peinados. Recupera la salud de tu cabello."
+    title="Extensiones de Pestañas en Murcia | Angeles Nails Studio"
+    description="Especialistas en extensiones de pestañas pelo a pelo, volumen ruso y lifting. Consigue una mirada impactante en Murcia."
 >
-    <CTAWhatsApp message="Hola, quiero reservar una cita de peluquería" />
+    <CTAWhatsApp message="Hola, quiero reservar una cita para pestañas" />
 
     <!-- Hero Section -->
     <section
@@ -37,7 +37,7 @@ if (error) {
         <div class="absolute inset-0 z-0">
             <img
                 src="/img/placeholder.svg"
-                alt="Peluquería en Murcia"
+                alt="Pestañas en Murcia"
                 class="w-full h-full object-cover"
             />
             <div
@@ -49,16 +49,16 @@ if (error) {
             <h1
                 class="font-serif text-5xl md:text-7xl font-bold mb-6 text-cream-50"
             >
-                <span class="hero-word inline-block opacity-0">Cabello</span><br
+                <span class="hero-word inline-block opacity-0">Mirada</span><br
                 />
                 <span class="text-gold-400 hero-word inline-block opacity-0"
-                    >radiante</span
+                    >impactante</span
                 >
             </h1>
             <p
                 class="text-xl md:text-2xl font-light text-cream-100 mb-8 hero-subtitle opacity-0"
             >
-                Salud y brillo en cada mechón
+                Volumen y longitud natural
             </p>
         </div>
     </section>
@@ -69,12 +69,10 @@ if (error) {
             <p
                 class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0"
             >
-                Tu cabello es tu mejor accesorio. En <strong
-                    >Angeles Nails Studio</strong
-                >, nos enfocamos en la
-                <strong>salud capilar</strong>. Ofrecemos tratamientos profundos
-                de recuperación, alisados orgánicos y peinados que te harán
-                sentir segura y hermosa.
+                Olvídate del rímel. En <strong>Angeles Nails Studio</strong>,
+                somos especialistas en realzar tu mirada con técnicas seguras y
+                materiales de alta calidad. Ya busques un efecto natural o un
+                volumen glamuroso, tenemos la técnica perfecta para ti.
             </p>
         </div>
     </section>
@@ -85,12 +83,12 @@ if (error) {
             <h2
                 class="text-4xl md:text-5xl font-serif font-bold text-center mb-4 reveal-text opacity-0 text-brown-800"
             >
-                Nuestros servicios de peluquería
+                Nuestros servicios de pestañas
             </h2>
             <p
                 class="text-xl text-brown-600 text-center mb-16 max-w-3xl mx-auto reveal-text opacity-0"
             >
-                Salud capilar y estilo personalizado
+                Realza tu mirada con naturalidad y volumen
             </p>
 
             <!-- Floating Preview Card -->
@@ -127,7 +125,7 @@ if (error) {
                                     <div class="flex items-center gap-8 flex-1">
                                         <h3 class="text-3xl md:text-5xl font-serif font-light text-brown-800 group-hover:text-gold-600 transition-colors duration-300 whitespace-nowrap">
                                             <a
-                                                href={`/${service.slug}`}
+                                                href={`/pestanas/${service.slug}`}
                                                 class="block w-full h-full before:absolute before:inset-0"
                                             >
                                                 {service.hero_title}

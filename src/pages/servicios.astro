@@ -140,7 +140,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                     </ul>
                     <div class="pt-4">
                         <a
-                            href="/manicura-murcia"
+                            href="/manicura"
                             class="inline-block bg-brown-800 text-cream-50 px-10 py-4 rounded-full hover:bg-gold-500 hover:text-brown-900 transition-all duration-300 font-medium"
                         >
                             Ver tratamientos de manicura
@@ -178,7 +178,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                     </ul>
                     <div class="pt-4">
                         <a
-                            href="/pedicura-murcia"
+                            href="/pedicura"
                             class="inline-block bg-brown-800 text-cream-50 px-10 py-4 rounded-full hover:bg-gold-500 hover:text-brown-900 transition-all duration-300 font-medium"
                         >
                             Ver tratamientos de pedicura
@@ -256,7 +256,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                     </ul>
                     <div class="pt-4">
                         <a
-                            href="/cejas-murcia"
+                            href="/cejas"
                             class="inline-block bg-brown-800 text-cream-50 px-10 py-4 rounded-full hover:bg-gold-500 hover:text-brown-900 transition-all duration-300 font-medium"
                         >
                             Ver tratamientos de cejas
@@ -294,7 +294,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                     </ul>
                     <div class="pt-4">
                         <a
-                            href="/pestanas-murcia"
+                            href="/pestanas"
                             class="inline-block bg-brown-800 text-cream-50 px-10 py-4 rounded-full hover:bg-gold-500 hover:text-brown-900 transition-all duration-300 font-medium"
                         >
                             Ver tratamientos de pestañas
@@ -372,7 +372,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                     </ul>
                     <div class="pt-4">
                         <a
-                            href="/peluqueria-murcia"
+                            href="/peluqueria"
                             class="inline-block bg-brown-800 text-cream-50 px-10 py-4 rounded-full hover:bg-gold-500 hover:text-brown-900 transition-all duration-300 font-medium"
                         >
                             Ver tratamientos de peluquería
@@ -414,7 +414,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                 {
                     quickMenuServices.map((service) => (
                         <a
-                            href={`/${service.slug}`}
+                            href={`/${service.category}/${service.slug}`}
                             class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
                             data-image={
                                 service.hero_image_url || "/img/placeholder.svg"

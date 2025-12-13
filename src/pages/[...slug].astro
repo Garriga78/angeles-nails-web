@@ -7,6 +7,10 @@ import { supabase } from "../lib/supabase";
 // Get the slug from the URL
 const { slug } = Astro.params;
 
+// Handle nested slugs (e.g. 'manicura/semipermanente-murcia' -> 'semipermanente-murcia')
+// We take the last segment to match against the DB 'slug' column
+const cleanSlug = slug?.split("/").pop();
+
 // Force no-cache to ensure real-time updates
 Astro.response.headers.set(
     "Cache-Control",
@@ -14,16 +18,21 @@ Astro.response.headers.set(
 );
 Astro.response.headers.set("Pragma", "no-cache");
 Astro.response.headers.set("Expires", "0");
+Astro.response.headers.set("Surrogate-Control", "no-store");
 
 // Fetch service data from Supabase
 const { data: service, error } = await supabase
     .from("services")
     .select("*")
-    .eq("slug", slug)
+    .eq("slug", cleanSlug)
     .single();
 
 // If service not found, return 404
 if (error || !service) {
+    console.error(
+        `Service not found for slug: ${slug} (clean: ${cleanSlug})`,
+        error,
+    );
     return Astro.redirect("/404");
 }
 ---
