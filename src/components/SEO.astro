@@ -18,8 +18,14 @@ const {
 } = Astro.props;
 
 const siteName = "Angeles Nails Studio";
-const siteUrl = Astro.url.origin;
-const socialImageURL = new URL(image, siteUrl).href;
+const siteUrl = Astro.url ? Astro.url.origin : "https://angelesnails.es";
+let socialImageURL = "/img/og-default.jpg";
+
+try {
+    socialImageURL = new URL(image, siteUrl).href;
+} catch (e) {
+    console.error("Error generating social image URL", e);
+}
 
 // Schema JSON-LD
 const schema = {

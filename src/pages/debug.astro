@@ -1,0 +1,55 @@
+---
+import { supabase } from "../lib/supabase";
+
+export const prerender = false;
+
+let dbStatus = "Checking...";
+let envStatus = [];
+let processStatus = "Unknown";
+
+try {
+    processStatus = typeof process !== "undefined" ? "Defined" : "Undefined";
+
+    // Check Env Vars (Safe masking)
+    const url =
+        import.meta.env.PUBLIC_SUPABASE_URL ||
+        (typeof process !== "undefined" && process.env.PUBLIC_SUPABASE_URL);
+    const key =
+        import.meta.env.PUBLIC_SUPABASE_ANON_KEY ||
+        (typeof process !== "undefined" &&
+            process.env.PUBLIC_SUPABASE_ANON_KEY);
+
+    envStatus.push(`Url Found: ${!!url}`);
+    if (url) envStatus.push(`Url Length: ${url.length}`);
+
+    envStatus.push(`Key Found: ${!!key}`);
+    if (key) envStatus.push(`Key Length: ${key.length}`);
+
+    // Check DB
+    const { data, error } = await supabase
+        .from("services")
+        .select("count", { count: "exact", head: true });
+    if (error) {
+        dbStatus = `Error: ${error.message}`;
+    } else {
+        dbStatus = "Connected! Services found.";
+    }
+} catch (e) {
+    dbStatus = `CRASH: ${e.message}`;
+}
+---
+
+<html>
+    <body>
+        <h1>Debug Page</h1>
+        <pre>
+    Process Status: {processStatus}
+    Env Status:
+    {JSON.stringify(envStatus, null, 2)}
+
+    DB Status: {dbStatus}
+    
+    Astro Generator: {Astro.generator}
+    </pre>
+    </body>
+</html>
