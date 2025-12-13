@@ -1,8 +1,20 @@
 ---
+export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import CTAWhatsApp from "../components/CTAWhatsApp.astro";
 import Testimonials from "../components/Testimonials.astro";
 import { supabase } from "../lib/supabase";
+
+// Force no-cache for Vercel SSR
+Astro.response.headers.set(
+    "Cache-Control",
+    "no-cache, no-store, must-revalidate",
+);
+Astro.response.headers.set("Pragma", "no-cache");
+Astro.response.headers.set("Expires", "0");
+Astro.response.headers.set("Surrogate-Control", "no-store"); // Additional Vercel header
+
+// ... rest of the file
 
 // Force no-cache for Vercel SSR
 Astro.response.headers.set(
@@ -542,3 +554,4 @@ const peluqueriaImg = getCategoryImage("peluqueria");
         }
     </style>
 </Layout>
+<!-- DEBUG TIMESTAMP: {new Date().toISOString()} -->
