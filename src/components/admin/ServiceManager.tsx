@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import ImageUploader from './ImageUploader';
 import SVGUploader from './SVGUploader';
+import RichTextEditor from './RichTextEditor';
 
 interface Service {
     id: string;
@@ -180,26 +181,6 @@ export default function ServiceManager() {
     }
 
     const categoriesOrder = ['manicura', 'pedicura', 'cejas', 'pestanas', 'peluqueria'];
-
-    const insertTag = (tag: 'b' | 'i' | 'br' | 'a') => {
-        if (!editingService) return;
-
-        let insertion = '';
-        if (tag === 'b') insertion = '<b>texto negrita</b>';
-        if (tag === 'i') insertion = '<i>texto cursiva</i>';
-        if (tag === 'br') insertion = '<br/>\n';
-        if (tag === 'a') insertion = '<a href="https://" class="text-gold-600 hover:underline">enlace</a>';
-
-        const textarea = document.getElementById('seo-content-textarea') as HTMLTextAreaElement;
-        if (textarea) {
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const text = editingService.seo_content || '';
-            const newText = text.substring(0, start) + insertion + text.substring(end);
-
-            setEditingService({ ...editingService, seo_content: newText });
-        }
-    };
 
     return (
         <div>
@@ -644,22 +625,10 @@ export default function ServiceManager() {
 
                                     {activeTab === 'seo' && (
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">Contenido SEO (Texto final)</label>
-
-                                            <div className="mb-2 flex gap-2 mt-2">
-                                                <button type="button" onClick={() => insertTag('b')} className="bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded text-sm font-bold border border-gray-300">B</button>
-                                                <button type="button" onClick={() => insertTag('i')} className="bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded text-sm italic border border-gray-300">I</button>
-                                                <button type="button" onClick={() => insertTag('br')} className="bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded text-sm border border-gray-300">Salto de línea</button>
-                                                <button type="button" onClick={() => insertTag('a')} className="bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded text-sm text-blue-600 underline border border-gray-300">Enlace</button>
-                                            </div>
-
-                                            <textarea
-                                                id="seo-content-textarea"
-                                                rows={8}
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Contenido SEO (Texto final)</label>
+                                            <RichTextEditor
                                                 value={editingService.seo_content || ''}
-                                                onChange={(e) => setEditingService({ ...editingService, seo_content: e.target.value })}
-                                                placeholder="Texto adicional para SEO que aparecerá al final de la página..."
-                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gold-500 focus:border-gold-500 sm:text-sm font-mono text-xs"
+                                                onChange={(newValue) => setEditingService({ ...editingService, seo_content: newValue })}
                                             />
                                         </div>
                                     )}

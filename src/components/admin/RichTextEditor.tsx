@@ -36,6 +36,13 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
     const formatUnorderedList = () => execCommand('insertUnorderedList');
     const formatOrderedList = () => execCommand('insertOrderedList');
 
+    const formatLink = () => {
+        const url = prompt('Introduce la URL del enlace:');
+        if (url) execCommand('createLink', url);
+    };
+
+    const removeLink = () => execCommand('unlink');
+
     const handleImageUpload = (url: string) => {
         const img = `<img src="${url}" alt="Imagen" class="w-full rounded-lg my-4" />`;
         execCommand('insertHTML', img);
@@ -61,6 +68,22 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
                     title="Cursiva"
                 >
                     I
+                </button>
+                <button
+                    type="button"
+                    onClick={formatLink}
+                    className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 text-blue-600 underline"
+                    title="Insertar Enlace"
+                >
+                    Link
+                </button>
+                <button
+                    type="button"
+                    onClick={removeLink}
+                    className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 text-red-500"
+                    title="Quitar Enlace"
+                >
+                    Unlink
                 </button>
 
                 <div className="w-px bg-gray-300 mx-1"></div>
