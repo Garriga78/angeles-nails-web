@@ -2,6 +2,44 @@
 import Layout from "../layouts/Layout.astro";
 import CTAWhatsApp from "../components/CTAWhatsApp.astro";
 import Testimonials from "../components/Testimonials.astro";
+import { supabase } from "../lib/supabase";
+
+// Force no-cache for Vercel SSR
+Astro.response.headers.set(
+    "Cache-Control",
+    "no-cache, no-store, must-revalidate",
+);
+Astro.response.headers.set("Pragma", "no-cache");
+Astro.response.headers.set("Expires", "0");
+
+// Fetch all services
+const { data: services, error } = await supabase
+    .from("services")
+    .select("*")
+    .order("display_order", { ascending: true });
+
+if (error) {
+    console.error("Error fetching services:", error);
+}
+
+// Helper to get a representative image for a category
+const getCategoryImage = (category: string) => {
+    const service = services?.find(
+        (s) => s.category === category && s.hero_image_url,
+    );
+    return service?.hero_image_url || "/img/placeholder.svg";
+};
+
+// Filter services for Quick Menu (example: filtered by some criteria or just take first 6)
+// Since the original had specific items, we will try to find them or just list top items.
+// For now, let's list the first 6 services as "Featured" in Quick Menu
+const quickMenuServices = services?.slice(0, 6) || [];
+
+const manicuraImg = getCategoryImage("manicura");
+const pedicuraImg = getCategoryImage("pedicura");
+const cejasImg = getCategoryImage("cejas");
+const pestanasImg = getCategoryImage("pestanas");
+const peluqueriaImg = getCategoryImage("peluqueria");
 ---
 
 <Layout
@@ -47,7 +85,7 @@ import Testimonials from "../components/Testimonials.astro";
                         class="overflow-hidden rounded-lg shadow-2xl relative h-[600px]"
                     >
                         <img
-                            src="/img/placeholder.svg"
+                            src={manicuraImg}
                             alt="Manicura"
                             class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
                         />
@@ -142,7 +180,7 @@ import Testimonials from "../components/Testimonials.astro";
                         class="overflow-hidden rounded-lg shadow-2xl relative h-[600px]"
                     >
                         <img
-                            src="/img/placeholder.svg"
+                            src={pedicuraImg}
                             alt="Pedicura"
                             class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
                         />
@@ -165,7 +203,7 @@ import Testimonials from "../components/Testimonials.astro";
                         class="overflow-hidden rounded-lg shadow-2xl relative h-[600px]"
                     >
                         <img
-                            src="/img/placeholder.svg"
+                            src={cejasImg}
                             alt="Cejas"
                             class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
                         />
@@ -258,7 +296,7 @@ import Testimonials from "../components/Testimonials.astro";
                         class="overflow-hidden rounded-lg shadow-2xl relative h-[600px]"
                     >
                         <img
-                            src="/img/placeholder.svg"
+                            src={pestanasImg}
                             alt="Pestañas"
                             class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
                         />
@@ -281,7 +319,7 @@ import Testimonials from "../components/Testimonials.astro";
                         class="overflow-hidden rounded-lg shadow-2xl relative h-[600px]"
                     >
                         <img
-                            src="/img/placeholder.svg"
+                            src={peluqueriaImg}
                             alt="Peluquería"
                             class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
                         />
@@ -361,120 +399,26 @@ import Testimonials from "../components/Testimonials.astro";
             </div>
 
             <div class="space-y-0">
-                <!-- Item 1 -->
-                <!-- Item 1 -->
-                <a
-                    href="/manicura-murcia/semipermanente-murcia"
-                    class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between">
-                        <h3
-                            class="text-2xl md:text-3xl font-serif text-brown-800 group-hover:text-gold-600 transition-colors"
+                {
+                    quickMenuServices.map((service) => (
+                        <a
+                            href={`/${service.slug}`}
+                            class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
+                            data-image={
+                                service.hero_image_url || "/img/placeholder.svg"
+                            }
                         >
-                            Manicura semipermanente
-                        </h3>
-                        <span
-                            class="text-brown-400 group-hover:text-gold-500 transition-colors text-xl"
-                            >→</span
-                        >
-                    </div>
-                </a>
-                <!-- Item 2 -->
-                <!-- Item 2 -->
-                <a
-                    href="/manicura-murcia/soft-gel-murcia"
-                    class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between">
-                        <h3
-                            class="text-2xl md:text-3xl font-serif text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Uñas soft gel
-                        </h3>
-                        <span
-                            class="text-brown-400 group-hover:text-gold-500 transition-colors text-xl"
-                            >→</span
-                        >
-                    </div>
-                </a>
-                <!-- Item 3 -->
-                <!-- Item 3 -->
-                <a
-                    href="/pedicura-murcia/pedicura-spa-murcia"
-                    class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between">
-                        <h3
-                            class="text-2xl md:text-3xl font-serif text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Pedicura spa
-                        </h3>
-                        <span
-                            class="text-brown-400 group-hover:text-gold-500 transition-colors text-xl"
-                            >→</span
-                        >
-                    </div>
-                </a>
-                <!-- Item 4 -->
-                <!-- Item 4 -->
-                <a
-                    href="/cejas-murcia/laminado-cejas-murcia"
-                    class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between">
-                        <h3
-                            class="text-2xl md:text-3xl font-serif text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Laminado de cejas
-                        </h3>
-                        <span
-                            class="text-brown-400 group-hover:text-gold-500 transition-colors text-xl"
-                            >→</span
-                        >
-                    </div>
-                </a>
-                <!-- Item 5 -->
-                <!-- Item 5 -->
-                <a
-                    href="/pestanas-murcia/lifting-pestanas-murcia"
-                    class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between">
-                        <h3
-                            class="text-2xl md:text-3xl font-serif text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Lifting de pestañas
-                        </h3>
-                        <span
-                            class="text-brown-400 group-hover:text-gold-500 transition-colors text-xl"
-                            >→</span
-                        >
-                    </div>
-                </a>
-                <!-- Item 6 -->
-                <!-- Item 6 -->
-                <a
-                    href="/peluqueria-murcia/tratamientos-murcia"
-                    class="service-list-item block border-b border-gold-200/30 py-6 cursor-pointer group transition-all duration-300 hover:bg-cream-50/50"
-                    data-image="/img/placeholder.svg"
-                >
-                    <div class="flex items-center justify-between">
-                        <h3
-                            class="text-2xl md:text-3xl font-serif text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Tratamiento capilar botox
-                        </h3>
-                        <span
-                            class="text-brown-400 group-hover:text-gold-500 transition-colors text-xl"
-                            >→</span
-                        >
-                    </div>
-                </a>
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-2xl md:text-3xl font-serif text-brown-800 group-hover:text-gold-600 transition-colors">
+                                    {service.hero_title}
+                                </h3>
+                                <span class="text-brown-400 group-hover:text-gold-500 transition-colors text-xl">
+                                    →
+                                </span>
+                            </div>
+                        </a>
+                    ))
+                }
             </div>
         </div>
     </section>
