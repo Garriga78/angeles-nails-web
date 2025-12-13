@@ -22,11 +22,15 @@ const { data: services, error } = await supabase
 if (error) {
     console.error("Error loading pedicura services:", error);
 }
+
+// Get first service image for SEO
+const seoImage = services?.[0]?.hero_image_url;
 ---
 
 <Layout
     title="Pedicura en Murcia | Pies Perfectos - Angeles Nails Studio"
-    description="Servicios de pedicura en Murcia: limpieza profunda, esmaltado permanente y tratamientos de spa. Relajación y belleza para tus pies."
+    description="Tratamientos de pedicura en Murcia: clásica, spa y semipermanente. Cuidado profundo, relax y belleza para tus pies en un ambiente exclusivo."
+    image={seoImage}
 >
     <CTAWhatsApp message="Hola, quiero reservar una cita para pedicura" />
 

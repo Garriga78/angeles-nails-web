@@ -22,11 +22,15 @@ const { data: services, error } = await supabase
 if (error) {
     console.error("Error loading cejas services:", error);
 }
+
+// Get first service image for SEO
+const seoImage = services?.[0]?.hero_image_url;
 ---
 
 <Layout
-    title="Diseño de Cejas en Murcia | Angeles Nails Studio"
-    description="Expertos en diseño de cejas, laminado y tinte en Murcia. Realza tu mirada con nuestros tratamientos personalizados."
+    title="Diseño de Cejas en Murcia | Laminado y Depilación - Angeles Nails"
+    description="Expertos en cejas en Murcia. Diseño de mirada, depilación con hilo y laminado de cejas para realzar tu belleza natural."
+    image={seoImage}
 >
     <CTAWhatsApp message="Hola, quiero reservar una cita para cejas" />
 

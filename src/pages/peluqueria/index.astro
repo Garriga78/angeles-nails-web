@@ -22,11 +22,15 @@ const { data: services, error } = await supabase
 if (error) {
     console.error("Error loading peluqueria services:", error);
 }
+
+// Get first service image for SEO
+const seoImage = services?.[0]?.hero_image_url;
 ---
 
 <Layout
-    title="Peluquería en Murcia | Tratamientos Capilares - Angeles Nails Studio"
-    description="Servicios de peluquería en Murcia: tratamientos de hidratación, botox capilar, alisados y peinados. Recupera la salud de tu cabello."
+    title="Peluquería en Murcia | Corte y Tratamientos - Angeles Nails Studio"
+    description="Salón de peluquería en Murcia. Cortes de tendencia, tratamientos reparadores y estilismo para un cabello sano y radiante."
+    image={seoImage}
 >
     <CTAWhatsApp message="Hola, quiero reservar una cita de peluquería" />
 

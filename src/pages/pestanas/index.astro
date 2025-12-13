@@ -22,11 +22,15 @@ const { data: services, error } = await supabase
 if (error) {
     console.error("Error loading pestanas services:", error);
 }
+
+// Get first service image for SEO
+const seoImage = services?.[0]?.hero_image_url;
 ---
 
 <Layout
-    title="Extensiones de Pestañas en Murcia | Angeles Nails Studio"
-    description="Especialistas en extensiones de pestañas pelo a pelo, volumen ruso y lifting. Consigue una mirada impactante en Murcia."
+    title="Pestañas en Murcia | Lifting y Extensiones - Angeles Nails Studio"
+    description="Luce una mirada impactante con nuestros servicios de pestañas en Murcia: lifting y extensiones naturales o volumen ruso."
+    image={seoImage}
 >
     <CTAWhatsApp message="Hola, quiero reservar una cita para pestañas" />
 

@@ -24,11 +24,15 @@ const { data: services, error } = await supabase
 if (error) {
     console.error("Error loading manicura services:", error);
 }
+
+// Get first service image for SEO
+const seoImage = services?.[0]?.hero_image_url;
 ---
 
 <Layout
     title="Manicura en Murcia | Uñas Perfectas - Angeles Nails Studio"
     description="Servicios de manicura en Murcia: uñas naturales, semipermanente, soft gel y polygel. Técnica profesional, higiene clínica y resultados duraderos en Plaza Santo Domingo."
+    image={seoImage}
 >
     <CTAWhatsApp message="Hola, quiero reservar una cita para manicura" />
 
