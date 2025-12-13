@@ -1,22 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
 
-const getEnv = (key: string) => {
-    // Priority: import.meta.env -> process.env
-    if (import.meta.env[key]) return import.meta.env[key];
-    if (typeof process !== 'undefined' && process.env && process.env[key]) return process.env[key];
-    return '';
-};
+// Access variables explicitly so Vite can statically replace them
+const astroUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const astroKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
-const supabaseUrl = getEnv('PUBLIC_SUPABASE_URL');
-const supabaseAnonKey = getEnv('PUBLIC_SUPABASE_ANON_KEY');
+// Access process.env safely for Node/Server environments
+const processUrl = typeof process !== 'undefined' && process.env ? process.env.PUBLIC_SUPABASE_URL : undefined;
+const processKey = typeof process !== 'undefined' && process.env ? process.env.PUBLIC_SUPABASE_ANON_KEY : undefined;
+
+// Fallback logic
+const supabaseUrl = astroUrl || processUrl || '';
+const supabaseAnonKey = astroKey || processKey || '';
 
 if (!supabaseUrl || !supabaseAnonKey) {
     console.error('CRITICAL ERROR: Supabase environment variables are missing!');
-    console.error('PUBLIC_SUPABASE_URL:', supabaseUrl ? 'Set' : 'Missing');
-    console.error('PUBLIC_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'Set' : 'Missing');
+    console.error('URL Found:', !!supabaseUrl);
+    console.error('Key Found:', !!supabaseAnonKey);
 }
 
-// Create client even if keys are missing to prevent crash on import, but queries will fail
+// Robust client creation that won't crash even if keys are missing
 export const supabase = createClient(
     supabaseUrl || 'https://placeholder.supabase.co',
     supabaseAnonKey || 'placeholder'
