@@ -258,110 +258,31 @@ if (error) {
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                <!-- Team members with staggered reveal -->
-                <div class="reveal-element opacity-0 group">
-                    <div class="relative mb-6 overflow-hidden rounded-2xl">
-                        <img
-                            src="/img/Eliana.jpg"
-                            alt="Eliana"
-                            class="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-brown-900/80 via-brown-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        >
-                        </div>
-                    </div>
-                    <h3
-                        class="text-2xl md:text-3xl font-serif font-bold mb-2 text-brown-800"
-                    >
-                        Eliana
-                    </h3>
-                    <p class="text-gold-600 font-medium mb-3 text-lg">
-                        Manicurista
-                    </p>
-                    <p class="text-brown-600 leading-relaxed">
-                        Especialista en manicura rusa y polygel. +8 años de
-                        experiencia.
-                    </p>
-                </div>
-
-                <div class="reveal-element opacity-0 group">
-                    <div class="relative mb-6 overflow-hidden rounded-2xl">
-                        <img
-                            src="/img/Andrea.jpg"
-                            alt="Andrea"
-                            class="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-brown-900/80 via-brown-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        >
-                        </div>
-                    </div>
-                    <h3
-                        class="text-2xl md:text-3xl font-serif font-bold mb-2 text-brown-800"
-                    >
-                        Andrea
-                    </h3>
-                    <p class="text-gold-600 font-medium mb-3 text-lg">
-                        Estilista
-                    </p>
-                    <p class="text-brown-600 leading-relaxed">
-                        Experta en tratamientos capilares y peinados de última
-                        tendencia.
-                    </p>
-                </div>
-
-                <div class="reveal-element opacity-0 group">
-                    <div class="relative mb-6 overflow-hidden rounded-2xl">
-                        <img
-                            src="/img/Nore.jpg"
-                            alt="Nore"
-                            class="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-brown-900/80 via-brown-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        >
-                        </div>
-                    </div>
-                    <h3
-                        class="text-2xl md:text-3xl font-serif font-bold mb-2 text-brown-800"
-                    >
-                        Nore
-                    </h3>
-                    <p class="text-gold-600 font-medium mb-3 text-lg">
-                        Pestañas & Cejas
-                    </p>
-                    <p class="text-brown-600 leading-relaxed">
-                        Certificada en lifting y diseño. Mirada perfecta
-                        garantizada.
-                    </p>
-                </div>
-
-                <div class="reveal-element opacity-0 group">
-                    <div class="relative mb-6 overflow-hidden rounded-2xl">
-                        <img
-                            src="/img/Angie.jpg"
-                            alt="Angie"
-                            class="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-brown-900/80 via-brown-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        >
-                        </div>
-                    </div>
-                    <h3
-                        class="text-2xl md:text-3xl font-serif font-bold mb-2 text-brown-800"
-                    >
-                        Angie
-                    </h3>
-                    <p class="text-gold-600 font-medium mb-3 text-lg">
-                        Manicurista
-                    </p>
-                    <p class="text-brown-600 leading-relaxed">
-                        Especialista en nail art. Creatividad y precisión en
-                        cada diseño.
-                    </p>
-                </div>
+                {
+                    teamMembers &&
+                        teamMembers.map((member) => (
+                            <div class="reveal-element opacity-0 group">
+                                <div class="relative mb-6 overflow-hidden rounded-2xl">
+                                    <img
+                                        src={member.image_url}
+                                        alt={member.name}
+                                        class="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-brown-900/80 via-brown-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-serif font-bold mb-2 text-brown-800">
+                                    {member.name}
+                                </h3>
+                                <p class="text-gold-600 font-medium mb-3 text-lg">
+                                    {member.role}
+                                </p>
+                                <p class="text-brown-600 leading-relaxed">
+                                    {member.bio ||
+                                        "Especialista en belleza y bienestar."}
+                                </p>
+                            </div>
+                        ))
+                }
             </div>
         </div>
     </section>
