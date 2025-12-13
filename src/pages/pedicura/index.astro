@@ -99,8 +99,7 @@ if (error) {
                 class="fixed pointer-events-none z-50 opacity-0"
             >
                 <div
-                    class="bg-white rounded-lg shadow-2xl overflow-hidden border-2 border-gold-300"
-                    style="width: 320px;"
+                    class="bg-white rounded-lg shadow-2xl overflow-hidden border-2 border-gold-300 w-48 md:w-80"
                 >
                     <img
                         id="preview-image"
@@ -157,116 +156,130 @@ if (error) {
                 }
             </div>
         </div>
-    </section>
 
-    <Testimonials />
+        <Testimonials />
 
-    <!-- Scripts -->
-    <script>
-        import { gsap } from "gsap";
-        import { ScrollTrigger } from "gsap/ScrollTrigger";
+        <!-- Scripts -->
+        <script>
+            import { gsap } from "gsap";
+            import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-        gsap.registerPlugin(ScrollTrigger);
+            gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Animations
-        const heroWords = document.querySelectorAll(".hero-word");
-        heroWords.forEach((word, i) => {
-            gsap.to(word, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out",
-                delay: 0.3 + i * 0.2,
-            });
-        });
-
-        gsap.to(".hero-subtitle", {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out",
-            delay: 1,
-        });
-
-        // Reveal Texts & Elements
-        gsap.utils
-            .toArray(".reveal-text, .reveal-element")
-            .forEach((element: any) => {
-                gsap.to(element, {
+            // Hero Animations
+            const heroWords = document.querySelectorAll(".hero-word");
+            heroWords.forEach((word, i) => {
+                gsap.to(word, {
                     opacity: 1,
                     y: 0,
-                    duration: 1.2,
+                    duration: 0.8,
                     ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: element,
-                        start: "top 85%",
-                    },
+                    delay: 0.3 + i * 0.2,
                 });
             });
 
-        // Floating Service Preview
-        const preview = document.getElementById("service-preview");
-        const previewImage = document.getElementById(
-            "preview-image",
-        ) as HTMLImageElement;
-        const serviceItems = document.querySelectorAll(".service-list-item");
-
-        let leftTo: any;
-        let topTo: any;
-
-        if (preview) {
-            leftTo = gsap.quickTo(preview, "left", {
-                duration: 0.6,
+            gsap.to(".hero-subtitle", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
                 ease: "power3.out",
+                delay: 1,
             });
-            topTo = gsap.quickTo(preview, "top", {
-                duration: 0.6,
-                ease: "power3.out",
-            });
-        }
 
-        serviceItems.forEach((item) => {
-            const element = item as HTMLElement;
-            element.addEventListener("mouseenter", () => {
-                const image = element.getAttribute("data-image");
-                if (previewImage && preview) {
-                    previewImage.src = image || "";
-                    gsap.to(preview, {
+            // Reveal Texts & Elements
+            gsap.utils
+                .toArray(".reveal-text, .reveal-element")
+                .forEach((element: any) => {
+                    gsap.to(element, {
                         opacity: 1,
-                        duration: 0.3,
+                        y: 0,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 85%",
+                        },
                     });
-                }
-            });
+                });
 
-            element.addEventListener("mousemove", (e: MouseEvent) => {
-                if (preview && leftTo && topTo) {
-                    const offsetX = 80;
-                    const offsetY = -100;
-                    leftTo(e.clientX + offsetX);
-                    topTo(e.clientY + offsetY);
-                }
-            });
+            // Floating Service Preview
+            const preview = document.getElementById("service-preview");
+            const previewImage = document.getElementById(
+                "preview-image",
+            ) as HTMLImageElement;
+            const serviceItems =
+                document.querySelectorAll(".service-list-item");
 
-            element.addEventListener("mouseleave", () => {
-                if (preview) {
-                    gsap.to(preview, {
-                        opacity: 0,
-                        duration: 0.3,
-                    });
-                }
-            });
-        });
-    </script>
+            let leftTo: any;
+            let topTo: any;
 
-    <style>
-        .hero-word,
-        .hero-subtitle,
-        .reveal-text {
-            transform: translateY(20px);
-        }
-        .service-list-item {
-            transition: all 0.3s ease;
-        }
-    </style>
-</Layout>
-<!-- DEBUG TIMESTAMP: {new Date().toISOString()} -->
+            if (preview) {
+                leftTo = gsap.quickTo(preview, "left", {
+                    duration: 0.6,
+                    ease: "power3.out",
+                });
+                topTo = gsap.quickTo(preview, "top", {
+                    duration: 0.6,
+                    ease: "power3.out",
+                });
+            }
+
+            serviceItems.forEach((item) => {
+                const element = item as HTMLElement;
+                element.addEventListener("mouseenter", () => {
+                    const image = element.getAttribute("data-image");
+                    if (previewImage && preview) {
+                        previewImage.src = image || "";
+                        gsap.to(preview, {
+                            opacity: 1,
+                            duration: 0.3,
+                        });
+                    }
+                });
+
+                element.addEventListener("mousemove", (e: MouseEvent) => {
+                    if (preview && leftTo && topTo) {
+                        const previewEl = preview.querySelector("div");
+                        const previewHeight = previewEl
+                            ? previewEl.offsetHeight
+                            : 200;
+                        const gap = 20;
+
+                        // Smart Vertical Positioning
+                        let targetY = e.clientY + gap;
+                        if (e.clientY > window.innerHeight / 2) {
+                            targetY = e.clientY - previewHeight - gap;
+                        }
+
+                        // Horizontal Positioning
+                        const targetX = e.clientX + 40;
+
+                        leftTo(targetX);
+                        topTo(targetY);
+                    }
+                });
+                element.addEventListener("mouseleave", () => {
+                    if (preview) {
+                        gsap.to(preview, {
+                            opacity: 0,
+                            duration: 0.3,
+                        });
+                    }
+                });
+            });
+        </script>
+
+        <style>
+            .hero-word,
+            .hero-subtitle,
+            .reveal-text {
+                transform: translateY(20px);
+            }
+            .service-list-item {
+                transition: all 0.3s ease;
+            }
+        </style>
+
+        <!-- DEBUG TIMESTAMP: {new Date().toISOString()} -->
+    </section></Layout
+>
