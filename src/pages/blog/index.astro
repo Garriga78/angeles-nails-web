@@ -1,6 +1,25 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import CTAWhatsApp from "../../components/CTAWhatsApp.astro";
+import { supabase } from "../../lib/supabase";
+
+export const prerender = false;
+
+// Force refresh
+Astro.response.headers.set(
+    "Cache-Control",
+    "no-cache, no-store, must-revalidate",
+);
+
+const { data: posts, error } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("is_published", true)
+    .order("created_at", { ascending: false });
+
+if (error) {
+    console.error("Error fetching blog posts:", error);
+}
 ---
 
 <Layout
@@ -43,128 +62,56 @@ import CTAWhatsApp from "../../components/CTAWhatsApp.astro";
     <section class="py-24 bg-cream-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                <!-- Article 1 -->
-                <article class="group cursor-pointer reveal-element opacity-0">
-                    <div
-                        class="overflow-hidden rounded-lg shadow-lg mb-6 h-64 relative"
-                    >
-                        <img
-                            src="/img/placeholder.svg"
-                            alt="Tendencias Uñas 2024"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                            class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"
-                        >
+                {
+                    posts && posts.length > 0 ? (
+                        posts.map((post, index) => (
+                            <article
+                                class="group cursor-pointer reveal-element opacity-0"
+                                style={`transition-delay: ${index * 0.1}s;`}
+                            >
+                                <div class="overflow-hidden rounded-lg shadow-lg mb-6 h-64 relative bg-gray-200">
+                                    <img
+                                        src={
+                                            post.image_url ||
+                                            "/img/placeholder.svg"
+                                        }
+                                        alt={post.title}
+                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                    <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                                </div>
+                                <div class="space-y-4">
+                                    <span class="text-gold-600 font-medium text-sm tracking-widest uppercase">
+                                        {post.category || "General"}
+                                    </span>
+                                    <h3 class="text-2xl font-serif font-bold text-brown-800 group-hover:text-gold-600 transition-colors">
+                                        <a
+                                            href={`/blog/${post.slug}`}
+                                            class="block"
+                                        >
+                                            {post.title}
+                                        </a>
+                                    </h3>
+                                    <p class="text-brown-600 line-clamp-3">
+                                        {post.excerpt}
+                                    </p>
+                                    <a
+                                        href={`/blog/${post.slug}`}
+                                        class="inline-block text-brown-800 font-medium border-b border-brown-800 pb-1 group-hover:text-gold-600 group-hover:border-gold-600 transition-all"
+                                    >
+                                        Leer más
+                                    </a>
+                                </div>
+                            </article>
+                        ))
+                    ) : (
+                        <div class="col-span-full text-center py-20">
+                            <p class="text-xl text-brown-600">
+                                No hay artículos publicados de momento.
+                            </p>
                         </div>
-                    </div>
-                    <div class="space-y-4">
-                        <span
-                            class="text-gold-600 font-medium text-sm tracking-widest uppercase"
-                            >Tendencias</span
-                        >
-                        <h3
-                            class="text-2xl font-serif font-bold text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Las tendencias en uñas que dominarán este 2024
-                        </h3>
-                        <p class="text-brown-600 line-clamp-3">
-                            Descubre los colores, formas y diseños que marcarán
-                            la pauta esta temporada. Desde el minimalismo "Clean
-                            Girl" hasta el regreso de los tonos vibrantes.
-                        </p>
-                        <a
-                            href="#"
-                            class="inline-block text-brown-800 font-medium border-b border-brown-800 pb-1 group-hover:text-gold-600 group-hover:border-gold-600 transition-all"
-                        >
-                            Leer más
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Article 2 -->
-                <article
-                    class="group cursor-pointer reveal-element opacity-0"
-                    style="transition-delay: 0.1s;"
-                >
-                    <div
-                        class="overflow-hidden rounded-lg shadow-lg mb-6 h-64 relative"
-                    >
-                        <img
-                            src="/img/placeholder.svg"
-                            alt="Cuidado de Cejas"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                            class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"
-                        >
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <span
-                            class="text-gold-600 font-medium text-sm tracking-widest uppercase"
-                            >Consejos</span
-                        >
-                        <h3
-                            class="text-2xl font-serif font-bold text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Cómo mantener tus cejas perfectas entre visitas
-                        </h3>
-                        <p class="text-brown-600 line-clamp-3">
-                            Tips esenciales para cuidar tu diseño de cejas y
-                            laminado en casa. Mantén la forma y la hidratación
-                            para una mirada siempre impecable.
-                        </p>
-                        <a
-                            href="#"
-                            class="inline-block text-brown-800 font-medium border-b border-brown-800 pb-1 group-hover:text-gold-600 group-hover:border-gold-600 transition-all"
-                        >
-                            Leer más
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Article 3 -->
-                <article
-                    class="group cursor-pointer reveal-element opacity-0"
-                    style="transition-delay: 0.2s;"
-                >
-                    <div
-                        class="overflow-hidden rounded-lg shadow-lg mb-6 h-64 relative"
-                    >
-                        <img
-                            src="/img/placeholder.svg"
-                            alt="Beneficios Pedicura Spa"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                            class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"
-                        >
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <span
-                            class="text-gold-600 font-medium text-sm tracking-widest uppercase"
-                            >Bienestar</span
-                        >
-                        <h3
-                            class="text-2xl font-serif font-bold text-brown-800 group-hover:text-gold-600 transition-colors"
-                        >
-                            Por qué deberías probar la Pedicura Spa
-                        </h3>
-                        <p class="text-brown-600 line-clamp-3">
-                            Más que estética, es salud. Conoce los beneficios de
-                            nuestros tratamientos profundos de hidratación y
-                            relajación para tus pies.
-                        </p>
-                        <a
-                            href="#"
-                            class="inline-block text-brown-800 font-medium border-b border-brown-800 pb-1 group-hover:text-gold-600 group-hover:border-gold-600 transition-all"
-                        >
-                            Leer más
-                        </a>
-                    </div>
-                </article>
+                    )
+                }
             </div>
         </div>
     </section>

@@ -1,0 +1,167 @@
+---
+export const prerender = false;
+import Layout from "../../layouts/Layout.astro";
+import CTAWhatsApp from "../../components/CTAWhatsApp.astro";
+import { supabase } from "../../lib/supabase";
+
+const { slug } = Astro.params;
+
+// Force refresh
+Astro.response.headers.set(
+    "Cache-Control",
+    "no-cache, no-store, must-revalidate",
+);
+
+const { data: post, error } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .single();
+
+if (error || !post) {
+    console.error("Post not found:", slug, error);
+    return Astro.redirect("/404");
+}
+---
+
+<Layout
+    title={`${post.title} | Angeles Nails Studio`}
+    description={post.excerpt || post.title}
+    image={post.image_url}
+    type="article"
+>
+    <!-- Progress Indicator -->
+    <div class="fixed top-20 left-0 w-full h-1 bg-gray-200 z-40">
+        <div
+            class="h-full bg-gold-500 scale-x-0 origin-left"
+            id="scroll-progress"
+        >
+        </div>
+    </div>
+
+    <CTAWhatsApp
+        message={`Hola, leí el artículo "${post.title}" y quiero más información`}
+    />
+
+    <article>
+        <!-- Article Header -->
+        <header
+            class="relative h-[60vh] flex items-center justify-center overflow-hidden pt-20"
+        >
+            <div class="absolute inset-0 z-0">
+                <img
+                    src={post.image_url || "/img/placeholder.svg"}
+                    alt={post.title}
+                    class="w-full h-full object-cover"
+                />
+                <div
+                    class="absolute inset-0 bg-gradient-to-b from-brown-900/80 via-brown-800/60 to-cream-50"
+                >
+                </div>
+            </div>
+            <div class="text-center z-10 px-4 max-w-4xl mx-auto mt-10">
+                <span
+                    class="inline-block px-4 py-1 mb-6 text-sm font-medium tracking-widest text-gold-400 border border-gold-400 rounded-full uppercase bg-brown-900/50 backdrop-blur-sm reveal-text opacity-0"
+                >
+                    {post.category || "Blog"}
+                </span>
+                <h1
+                    class="font-serif text-4xl md:text-6xl font-bold mb-6 text-cream-50 leading-tight reveal-text opacity-0"
+                >
+                    {post.title}
+                </h1>
+                {
+                    post.excerpt && (
+                        <p class="text-lg md:text-xl font-light text-cream-100 max-w-2xl mx-auto reveal-text opacity-0">
+                            {post.excerpt}
+                        </p>
+                    )
+                }
+            </div>
+        </header>
+
+        <!-- Article Content -->
+        <div class="bg-cream-50 py-20">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="bg-white p-8 md:p-12 rounded-lg shadow-xl reveal-element opacity-0"
+                >
+                    <!-- Date -->
+                    <div
+                        class="flex items-center gap-4 text-sm text-gray-500 mb-8 pb-8 border-b border-gray-100"
+                    >
+                        <span class="flex items-center gap-2">
+                            📅 {
+                                new Date(post.created_at).toLocaleDateString(
+                                    "es-ES",
+                                    {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                    },
+                                )
+                            }
+                        </span>
+                        <span class="flex items-center gap-2">
+                            ✍️ Angeles Nails Team
+                        </span>
+                    </div>
+
+                    <!-- Main Content (Rich Text) -->
+                    <div
+                        class="prose prose-lg prose-headings:font-serif prose-headings:text-brown-800 prose-p:text-gray-600 prose-a:text-gold-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg max-w-none"
+                        set:html={post.content}
+                    />
+                </div>
+
+                <!-- Share / Back -->
+                <div
+                    class="mt-12 flex justify-between items-center border-t border-brown-200 pt-8"
+                >
+                    <a
+                        href="/blog"
+                        class="flex items-center gap-2 text-brown-800 hover:text-gold-600 font-medium transition-colors"
+                    >
+                        ← Volver al Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <script>
+        import { gsap } from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scroll Progress
+        gsap.to("#scroll-progress", {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "article",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0,
+            },
+        });
+
+        // Reveal Animations
+        gsap.utils
+            .toArray(".reveal-text, .reveal-element")
+            .forEach((element: any) => {
+                gsap.to(element, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                    },
+                });
+            });
+    </script>
+</Layout>

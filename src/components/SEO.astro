@@ -1,0 +1,89 @@
+---
+export interface Props {
+    title: string;
+    description: string;
+    image?: string;
+    type?: "website" | "article" | "profile";
+    publishDate?: string;
+    canonicalURL?: string;
+}
+
+const {
+    title,
+    description,
+    image = "/img/og-default.jpg",
+    type = "website",
+    publishDate,
+    canonicalURL = Astro.url.href,
+} = Astro.props;
+
+const siteName = "Angeles Nails Studio";
+const siteUrl = Astro.url.origin;
+const socialImageURL = new URL(image, siteUrl).href;
+
+// Schema JSON-LD
+const schema = {
+    "@context": "https://schema.org",
+    "@type": type === "article" ? "BlogPosting" : "BeautySalon",
+    name: title,
+    description: description,
+    image: socialImageURL,
+    url: canonicalURL,
+    ...(type === "article" && publishDate
+        ? {
+              headline: title,
+              datePublished: publishDate,
+              author: {
+                  "@type": "Person",
+                  name: "Angeles Nails Team",
+              },
+          }
+        : {
+              telephone: "+34613302914",
+              address: {
+                  "@type": "PostalAddress",
+                  streetAddress: "Plaza Santo Domingo",
+                  addressLocality: "Murcia",
+                  addressRegion: "Murcia",
+                  addressCountry: "ES",
+              },
+              priceRange: "$$",
+              openingHoursSpecification: [
+                  {
+                      "@type": "OpeningHoursSpecification",
+                      dayOfWeek: [
+                          "Monday",
+                          "Tuesday",
+                          "Wednesday",
+                          "Thursday",
+                          "Friday",
+                      ],
+                      opens: "10:00",
+                      closes: "20:00",
+                  },
+              ],
+          }),
+};
+---
+
+<!-- SEO Basic -->
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:site_name" content={siteName} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={socialImageURL} />
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
