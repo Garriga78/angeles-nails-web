@@ -3,15 +3,24 @@ import { supabase } from "../lib/supabase";
 export async function GET() {
     const siteUrl = "https://angelesnails.es"; // Replace with actual domain
 
-    // Fetch dynamic data
-    const { data: services } = await supabase
-        .from("services")
-        .select("category, slug, updated_at");
+    let services: any[] = [];
+    let posts: any[] = [];
 
-    const { data: posts } = await supabase
-        .from("blog_posts")
-        .select("slug, created_at")
-        .eq("is_published", true);
+    try {
+        // Fetch dynamic data
+        const { data: servicesResponse } = await supabase
+            .from("services")
+            .select("category, slug, updated_at");
+        services = servicesResponse || [];
+
+        const { data: postsResponse } = await supabase
+            .from("blog_posts")
+            .select("slug, created_at")
+            .eq("is_published", true);
+        posts = postsResponse || [];
+    } catch (e) {
+        console.error("Error fetching sitemap data:", e);
+    }
 
     const pages = [
         "",
