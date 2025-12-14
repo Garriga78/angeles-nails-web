@@ -34,12 +34,19 @@ if (error) {
     console.error("Error fetching services:", error);
 }
 
-// Helper to get a representative image for a category
-const getCategoryImage = (category: string) => {
-    const service = services?.find(
-        (s) => s.category === category && s.hero_image_url,
-    );
-    return service?.hero_image_url || "/img/placeholder.svg";
+// Fetch categories with their images
+const { data: categories, error: categoriesError } = await supabase
+    .from("categories")
+    .select("*");
+
+if (categoriesError) {
+    console.error("Error fetching categories:", categoriesError);
+}
+
+// Helper to get category image from categories table
+const getCategoryImage = (categorySlug: string) => {
+    const category = categories?.find((c) => c.slug === categorySlug);
+    return category?.hero_image_url || "/img/placeholder.svg";
 };
 
 // Filter services for Quick Menu (example: filtered by some criteria or just take first 6)
