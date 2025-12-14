@@ -107,12 +107,9 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={manicuraImg}
                             alt="Manicura"
-                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
+                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
+                            style="transform: translateY(-10%);"
                         />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"
-                        >
-                        </div>
                     </div>
                     <!-- Decorative Element -->
                     <div
@@ -202,12 +199,9 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={pedicuraImg}
                             alt="Pedicura"
-                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
+                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
+                            style="transform: translateY(-10%);"
                         />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"
-                        >
-                        </div>
                     </div>
                     <div
                         class="absolute -top-10 -right-10 w-40 h-40 bg-gold-200/30 rounded-full blur-3xl -z-10"
@@ -225,12 +219,9 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={cejasImg}
                             alt="Cejas"
-                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
+                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
+                            style="transform: translateY(-10%);"
                         />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"
-                        >
-                        </div>
                     </div>
                     <div
                         class="absolute -bottom-10 -left-10 w-40 h-40 bg-gold-200/30 rounded-full blur-3xl -z-10"
@@ -318,12 +309,9 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={pestanasImg}
                             alt="Pestañas"
-                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
+                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
+                            style="transform: translateY(-10%);"
                         />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"
-                        >
-                        </div>
                     </div>
                     <div
                         class="absolute -top-10 -right-10 w-40 h-40 bg-gold-200/30 rounded-full blur-3xl -z-10"
@@ -341,12 +329,9 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={peluqueriaImg}
                             alt="Peluquería"
-                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 parallax-img"
+                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
+                            style="transform: translateY(-10%);"
                         />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"
-                        >
-                        </div>
                     </div>
                     <div
                         class="absolute -bottom-10 -left-10 w-40 h-40 bg-gold-200/30 rounded-full blur-3xl -z-10"
@@ -497,7 +482,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
         // Parallax Images in ZigZag
         gsap.utils.toArray(".parallax-img").forEach((img: any) => {
             gsap.to(img, {
-                y: 50, // Subtle movement
+                y: 80, // Increased movement for more visible parallax
                 scrollTrigger: {
                     trigger: img.parentElement,
                     start: "top bottom",
