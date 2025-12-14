@@ -21,6 +21,16 @@ export default function ImageUploader({ onUpload, currentImage, bucketName = 'im
             }
 
             const file = event.target.files[0];
+
+            // Validar tamaño de archivo (máximo 2MB)
+            const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+            if (file.size > maxSizeInBytes) {
+                throw new Error(
+                    `La imagen es demasiado grande (${(file.size / 1024 / 1024).toFixed(2)}MB). El tamaño máximo permitido es 2MB. ` +
+                    `Puedes comprimir tu imagen usando I❤IMG: https://www.iloveimg.com/compress-image`
+                );
+            }
+
             const fileExt = file.name.split('.').pop();
             const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
             const filePath = `${fileName}`;
@@ -84,7 +94,29 @@ export default function ImageUploader({ onUpload, currentImage, bucketName = 'im
             hover:file:bg-brown-100"
                 />
             </div>
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && (
+                <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
+                    {error.includes('I❤IMG') ? (
+                        <div>
+                            <p className="font-semibold mb-1">❌ Error: Imagen demasiado grande</p>
+                            <p className="mb-2">{error.split('Puedes comprimir')[0]}</p>
+                            <p>
+                                Puedes comprimir tu imagen usando{' '}
+                                <a
+                                    href="https://www.iloveimg.com/compress-image"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:text-blue-800 underline font-semibold"
+                                >
+                                    I❤IMG (Click aquí)
+                                </a>
+                            </p>
+                        </div>
+                    ) : (
+                        <p>{error}</p>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
