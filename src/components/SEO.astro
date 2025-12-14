@@ -2,6 +2,7 @@
 export interface Props {
     title: string;
     description: string;
+    keywords?: string;
     image?: string;
     type?: "website" | "article" | "profile";
     publishDate?: string;
@@ -11,6 +12,7 @@ export interface Props {
 const {
     title,
     description,
+    keywords,
     image = "/img/og-default.jpg",
     type = "website",
     publishDate,
@@ -74,6 +76,7 @@ const schema = {
 
 <!-- SEO Basic -->
 <meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Open Graph / Facebook -->
@@ -82,7 +85,10 @@ const schema = {
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={socialImageURL} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="es_ES" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -90,6 +96,9 @@ const schema = {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={socialImageURL} />
+
+<!-- WhatsApp / Telegram -->
+<meta property="og:image:alt" content={title} />
 
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json" set:html={JSON.stringify(schema)} />
