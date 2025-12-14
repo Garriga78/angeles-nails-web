@@ -107,8 +107,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={manicuraImg}
                             alt="Manicura"
-                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
-                            style="transform: translateY(-10%);"
+                            class="w-full h-[110%] object-cover transition-transform duration-700 group-hover:scale-105 parallax-img"
                         />
                     </div>
                     <!-- Decorative Element -->
@@ -199,8 +198,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={pedicuraImg}
                             alt="Pedicura"
-                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
-                            style="transform: translateY(-10%);"
+                            class="w-full h-[110%] object-cover transition-transform duration-700 group-hover:scale-105 parallax-img"
                         />
                     </div>
                     <div
@@ -219,8 +217,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={cejasImg}
                             alt="Cejas"
-                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
-                            style="transform: translateY(-10%);"
+                            class="w-full h-[110%] object-cover transition-transform duration-700 group-hover:scale-105 parallax-img"
                         />
                     </div>
                     <div
@@ -309,8 +306,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={pestanasImg}
                             alt="Pestañas"
-                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
-                            style="transform: translateY(-10%);"
+                            class="w-full h-[110%] object-cover transition-transform duration-700 group-hover:scale-105 parallax-img"
                         />
                     </div>
                     <div
@@ -329,8 +325,7 @@ const peluqueriaImg = getCategoryImage("peluqueria");
                         <img
                             src={peluqueriaImg}
                             alt="Peluquería"
-                            class="w-full h-[120%] object-cover transition-transform duration-1000 group-hover:scale-105 parallax-img"
-                            style="transform: translateY(-10%);"
+                            class="w-full h-[110%] object-cover transition-transform duration-700 group-hover:scale-105 parallax-img"
                         />
                     </div>
                     <div
@@ -479,17 +474,24 @@ const peluqueriaImg = getCategoryImage("peluqueria");
             );
         });
 
-        // Parallax Images in ZigZag
+        // Parallax Images in ZigZag - Smooth bidirectional movement
         gsap.utils.toArray(".parallax-img").forEach((img: any) => {
-            gsap.to(img, {
-                y: 80, // Increased movement for more visible parallax
-                scrollTrigger: {
-                    trigger: img.parentElement,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: 1.5,
+            gsap.fromTo(
+                img,
+                {
+                    y: -30, // Start position (when element enters from bottom)
                 },
-            });
+                {
+                    y: 30, // End position (when element exits from top)
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: img.parentElement.parentElement,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 1.2, // Smooth sync with scroll
+                    },
+                },
+            );
         });
 
         // Hover Reveal Logic (Same as Manicura)
