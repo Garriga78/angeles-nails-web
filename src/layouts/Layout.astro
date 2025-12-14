@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import SEO from "../components/SEO.astro";
 import Logo from "../components/Logo.astro";
+import CookieConsent from "../components/CookieConsent.astro";
 
 interface Props {
 	title: string;
@@ -374,6 +375,20 @@ const categoryOrder = [
 									>Blog</a
 								>
 							</li>
+							<li>
+								<a
+									href="/privacidad"
+									class="hover:text-gold-400 transition-colors"
+									>Privacidad</a
+								>
+							</li>
+							<li>
+								<a
+									href="/cookies"
+									class="hover:text-gold-400 transition-colors"
+									>Cookies</a
+								>
+							</li>
 						</ul>
 					</div>
 
@@ -574,5 +589,8 @@ const categoryOrder = [
 
 			requestAnimationFrame(raf);
 		</script>
+
+		<!-- Cookie Consent Banner -->
+		<CookieConsent />
 	</body>
 </html>
