@@ -396,11 +396,41 @@ const categoryOrder = [
 				<div
 					class="border-t border-cream-50/10 mt-8 pt-8 text-center text-sm text-cream-300"
 				>
-					<p>
+					<p class="mb-2">
 						&copy; {new Date().getFullYear()} Angeles Nails Studio. Todos
 						los derechos reservados.
 					</p>
+					<p class="text-xs text-cream-400">
+						Made with <span
+							id="rotating-emoji"
+							class="inline-block transition-all duration-300"
+							>💻</span
+						> by <a
+							href="https://www.tictag.es"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-gold-400 hover:text-gold-300 transition-colors font-medium"
+							>Tictag</a
+						>
+					</p>
 				</div>
+
+				<script>
+					// Rotating emoji animation
+					const emojis = ["💻", "🧸", "❤️", "🔍", "🔐", "🔮", "💡"];
+					let currentEmojiIndex = 0;
+					const emojiElement =
+						document.getElementById("rotating-emoji");
+
+					if (emojiElement) {
+						setInterval(() => {
+							currentEmojiIndex =
+								(currentEmojiIndex + 1) % emojis.length;
+							emojiElement.textContent =
+								emojis[currentEmojiIndex];
+						}, 1000);
+					}
+				</script>
 			</div>
 		</footer>
 
