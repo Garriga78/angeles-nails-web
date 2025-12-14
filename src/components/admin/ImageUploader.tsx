@@ -24,12 +24,23 @@ export default function ImageUploader({ onUpload, currentImage, bucketName = 'im
 
             // Validar tamaño de archivo (máximo 2MB)
             const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+            const fileSizeInMB = file.size / 1024 / 1024;
+
+            console.log('🔍 Validando imagen:', {
+                nombre: file.name,
+                tamaño: `${fileSizeInMB.toFixed(2)}MB`,
+                límite: '2MB',
+                excedeLímite: file.size > maxSizeInBytes
+            });
+
             if (file.size > maxSizeInBytes) {
-                throw new Error(
-                    `La imagen es demasiado grande (${(file.size / 1024 / 1024).toFixed(2)}MB). El tamaño máximo permitido es 2MB. ` +
-                    `Puedes comprimir tu imagen usando I❤IMG: https://www.iloveimg.com/compress-image`
-                );
+                const errorMsg = `La imagen es demasiado grande (${fileSizeInMB.toFixed(2)}MB). El tamaño máximo permitido es 2MB. ` +
+                    `Puedes comprimir tu imagen usando I❤IMG: https://www.iloveimg.com/compress-image`;
+                console.error('❌ Imagen rechazada:', errorMsg);
+                throw new Error(errorMsg);
             }
+
+            console.log('✅ Imagen válida, procediendo a subir...');
 
             const fileExt = file.name.split('.').pop();
             const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
@@ -47,9 +58,11 @@ export default function ImageUploader({ onUpload, currentImage, bucketName = 'im
             const { data } = supabase.storage.from(bucketName).getPublicUrl(filePath);
 
             onUpload(data.publicUrl);
+            console.log('✅ Imagen subida exitosamente');
 
         } catch (error: any) {
             setError(error.message);
+            console.error('❌ Error en handleUpload:', error);
         } finally {
             setUploading(false);
         }
