@@ -26,14 +26,16 @@ if (error) {
 // Get first service image for SEO
 const seoImage = services?.[0]?.hero_image_url;
 
-// Fetch category text
+// Fetch category data (text and image)
 const { data: categoryData } = await supabase
     .from("categories")
-    .select("seo_text")
+    .select("seo_text, hero_image_url")
     .eq("slug", "cejas")
     .single();
 
 const dynamicSeoText = categoryData?.seo_text;
+const categoryHeroImage =
+    categoryData?.hero_image_url || "/img/placeholder.svg";
 ---
 
 <Layout
@@ -49,7 +51,7 @@ const dynamicSeoText = categoryData?.seo_text;
     >
         <div class="absolute inset-0 z-0">
             <img
-                src="/img/placeholder.svg"
+                src={categoryHeroImage}
                 alt="Diseño de cejas en Murcia"
                 class="w-full h-full object-cover"
             />

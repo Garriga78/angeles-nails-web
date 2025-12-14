@@ -13,26 +13,32 @@ COMMENT ON COLUMN categories.hero_image_url IS 'URL de la imagen principal de la
 -- Ve a Storage > Create bucket > nombre: "images" > público: Sí
 
 -- 3. Políticas de Storage (ejecutar después de crear el bucket)
+-- Eliminar políticas existentes si existen (para evitar errores de duplicados)
+DROP POLICY IF EXISTS "Allow authenticated uploads to images bucket" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public access to images bucket" ON storage.objects;
+DROP POLICY IF EXISTS "Allow authenticated updates to images bucket" ON storage.objects;
+DROP POLICY IF EXISTS "Allow authenticated deletes from images bucket" ON storage.objects;
+
 -- Política para permitir subir imágenes (usuarios autenticados)
-CREATE POLICY IF NOT EXISTS "Allow authenticated uploads to images bucket"
+CREATE POLICY "Allow authenticated uploads to images bucket"
 ON storage.objects FOR INSERT
 TO authenticated
 WITH CHECK (bucket_id = 'images');
 
 -- Política para permitir acceso público a las imágenes
-CREATE POLICY IF NOT EXISTS "Allow public access to images bucket"
+CREATE POLICY "Allow public access to images bucket"
 ON storage.objects FOR SELECT
 TO public
 USING (bucket_id = 'images');
 
 -- Política para permitir actualizar imágenes (usuarios autenticados)
-CREATE POLICY IF NOT EXISTS "Allow authenticated updates to images bucket"
+CREATE POLICY "Allow authenticated updates to images bucket"
 ON storage.objects FOR UPDATE
 TO authenticated
 USING (bucket_id = 'images');
 
 -- Política para permitir eliminar imágenes (usuarios autenticados)
-CREATE POLICY IF NOT EXISTS "Allow authenticated deletes from images bucket"
+CREATE POLICY "Allow authenticated deletes from images bucket"
 ON storage.objects FOR DELETE
 TO authenticated
 USING (bucket_id = 'images');
