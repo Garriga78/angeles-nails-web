@@ -28,14 +28,13 @@ if (error) {
 // Get first service image for SEO
 const seoImage = services?.[0]?.hero_image_url;
 
-// Fetch category data (text and image)
+// Fetch category data (only image)
 const { data: categoryData } = await supabase
     .from("categories")
-    .select("seo_text, hero_image_url")
+    .select("hero_image_url")
     .eq("slug", "manicura")
     .single();
 
-const dynamicSeoText = categoryData?.seo_text;
 const categoryHeroImage =
     categoryData?.hero_image_url || "/img/placeholder.svg";
 ---
@@ -83,32 +82,23 @@ const categoryHeroImage =
     <!-- Introducción -->
     <section class="py-16 bg-cream-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            {
-                dynamicSeoText ? (
-                    <div
-                        class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0 prose prose-brown max-w-none"
-                        set:html={dynamicSeoText}
-                    />
-                ) : (
-                    <>
-                        <p class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0">
-                            En <strong>Angeles Nails Studio</strong>, la
-                            manicura no es solo un servicio, es un{" "}
-                            <strong>ritual de autocuidado</strong> diseñado para
-                            que tus manos luzcan impecables durante semanas.
-                            Desde uñas naturales hasta las técnicas más
-                            avanzadas en polygel, cada tratamiento se realiza
-                            con la máxima atención al detalle.
-                        </p>
-                        <p class="text-lg text-brown-600 leading-relaxed reveal-text opacity-0">
-                            Nuestro equipo de manicuristas expertas utiliza
-                            productos profesionales de salón y sigue estrictos
-                            protocolos de higiene para garantizar resultados
-                            duraderos y seguros.
-                        </p>
-                    </>
-                )
-            }
+            <p
+                class="text-xl text-brown-700 font-light leading-relaxed mb-6 reveal-text opacity-0"
+            >
+                En <strong>Angeles Nails Studio</strong>, la manicura no es solo
+                un servicio, es un{" "}
+                <strong>ritual de autocuidado</strong> diseñado para que tus manos
+                luzcan impecables durante semanas. Desde uñas naturales hasta las
+                técnicas más avanzadas en polygel, cada tratamiento se realiza con
+                la máxima atención al detalle.
+            </p>
+            <p
+                class="text-lg text-brown-600 leading-relaxed reveal-text opacity-0"
+            >
+                Nuestro equipo de manicuristas expertas utiliza productos
+                profesionales de salón y sigue estrictos protocolos de higiene
+                para garantizar resultados duraderos y seguros.
+            </p>
         </div>
     </section>
 

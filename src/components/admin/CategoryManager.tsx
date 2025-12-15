@@ -123,15 +123,8 @@ const CategoryManager: React.FC = () => {
             <div className="grid grid-cols-1 gap-8">
                 {categories.map((category) => (
                     <div key={category.id} className="bg-white p-6 rounded-lg shadow-md border border-gold-200">
-                        <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-xl font-bold text-brown-800 capitalize">{category.title}</h3>
-                            <button
-                                onClick={() => handleSave(category)}
-                                disabled={saving}
-                                className="bg-brown-700 text-white px-4 py-2 rounded hover:bg-gold-500 transition-colors disabled:opacity-50"
-                            >
-                                {saving ? 'Guardando...' : 'Guardar Cambios'}
-                            </button>
+                        <div className="mb-6">
+                            <h3 className="text-xl font-bold text-brown-800 capitalize mb-4">{category.title}</h3>
                         </div>
 
                         {/* Image Section */}
@@ -160,19 +153,10 @@ const CategoryManager: React.FC = () => {
                                         currentImage={category.hero_image_url}
                                     />
                                     <p className="text-xs text-gray-500 mt-2">
-                                        Recomendado: 1200x800px, formato JPG o PNG
+                                        Recomendado: 1200x800px, formato JPG o PNG. La imagen se guarda automáticamente.
                                     </p>
                                 </div>
                             </div>
-                        </div>
-
-                        {/* SEO Text Section */}
-                        <div>
-                            <h4 className="text-lg font-semibold text-brown-700 mb-3">Texto SEO</h4>
-                            <RichTextEditor
-                                value={category.seo_text || ''}
-                                onChange={(newValue) => handleTextChange(category.id, newValue)}
-                            />
                         </div>
                     </div>
                 ))}
