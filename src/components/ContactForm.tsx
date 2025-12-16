@@ -15,14 +15,24 @@ const ContactForm: React.FC = () => {
         setStatus('sending');
 
         try {
+            // Mapear el valor del asunto a texto legible
+            const subjectMap: { [key: string]: string } = {
+                'servicios': 'Reserva de Servicios',
+                'consulta': 'Otras Consultas',
+                'empleo': '¿Quieres trabajar con nosotros?'
+            };
+
+            const subjectText = subjectMap[formData.subject] || formData.subject;
+
             // Preparar datos para Web3Forms
             const formDataToSend = new FormData();
             formDataToSend.append('access_key', '8fa9e30d-1c15-461f-ab32-74eacbdc1f37');
             formDataToSend.append('name', formData.name);
             formDataToSend.append('email', formData.email);
             formDataToSend.append('phone', formData.phone);
-            formDataToSend.append('subject', `Contacto Angeles Nails - ${formData.subject}`);
-            formDataToSend.append('message', formData.message);
+            formDataToSend.append('subject', `Contacto Angeles Nails - ${subjectText}`);
+            // Incluir el asunto en el mensaje para que aparezca en el cuerpo del email
+            formDataToSend.append('message', `ASUNTO: ${subjectText}\n\n${formData.message}`);
             formDataToSend.append('to', 'mimate@angelesnails.es');
 
             const response = await fetch('https://api.web3forms.com/submit', {
