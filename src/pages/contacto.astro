@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CTAWhatsApp from "../components/CTAWhatsApp.astro";
+import ContactForm from "../components/ContactForm";
 ---
 
 <Layout
@@ -131,104 +132,7 @@ import CTAWhatsApp from "../components/CTAWhatsApp.astro";
                 </div>
 
                 <!-- Right Column: Form -->
-                <div
-                    class="bg-white p-8 md:p-12 rounded-lg shadow-xl border border-gold-100 reveal-element opacity-0"
-                >
-                    <h2 class="text-3xl font-serif text-brown-800 mb-8">
-                        Envíanos un mensaje
-                    </h2>
-                    <form class="space-y-8">
-                        <div class="space-y-2">
-                            <label
-                                for="name"
-                                class="block text-sm font-medium text-brown-600 uppercase tracking-wider"
-                                >Nombre Completo</label
-                            >
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                class="w-full px-0 py-2 border-b border-gold-200 focus:border-gold-500 focus:ring-0 bg-transparent transition-colors placeholder-brown-300"
-                                placeholder="Tu nombre"
-                            />
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="space-y-2">
-                                <label
-                                    for="phone"
-                                    class="block text-sm font-medium text-brown-600 uppercase tracking-wider"
-                                    >Teléfono</label
-                                >
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    name="phone"
-                                    class="w-full px-0 py-2 border-b border-gold-200 focus:border-gold-500 focus:ring-0 bg-transparent transition-colors placeholder-brown-300"
-                                    placeholder="+34 000 000 000"
-                                />
-                            </div>
-                            <div class="space-y-2">
-                                <label
-                                    for="email"
-                                    class="block text-sm font-medium text-brown-600 uppercase tracking-wider"
-                                    >Email</label
-                                >
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    class="w-full px-0 py-2 border-b border-gold-200 focus:border-gold-500 focus:ring-0 bg-transparent transition-colors placeholder-brown-300"
-                                    placeholder="tu@email.com"
-                                />
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label
-                                for="subject"
-                                class="block text-sm font-medium text-brown-600 uppercase tracking-wider"
-                                >Asunto</label
-                            >
-                            <select
-                                id="subject"
-                                name="subject"
-                                class="w-full px-0 py-2 border-b border-gold-200 focus:border-gold-500 focus:ring-0 bg-transparent transition-colors text-brown-800"
-                            >
-                                <option value="servicios"
-                                    >Reserva de Servicios</option
-                                >
-                                <option value="consulta">Otras Consultas</option
-                                >
-                                <option value="empleo"
-                                    >¿Quieres trabajar con nosotros?</option
-                                >
-                            </select>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label
-                                for="message"
-                                class="block text-sm font-medium text-brown-600 uppercase tracking-wider"
-                                >Mensaje</label
-                            >
-                            <textarea
-                                id="message"
-                                name="message"
-                                rows="4"
-                                class="w-full px-0 py-2 border-b border-gold-200 focus:border-gold-500 focus:ring-0 bg-transparent transition-colors placeholder-brown-300 resize-none"
-                                placeholder="¿En qué podemos ayudarte?"
-                            ></textarea>
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="w-full bg-brown-800 text-cream-50 py-4 rounded-full hover:bg-gold-500 hover:text-brown-900 transition-all duration-300 font-medium tracking-wide"
-                        >
-                            Enviar Mensaje
-                        </button>
-                    </form>
-                </div>
+                <ContactForm client:load />
             </div>
         </div>
     </section>
