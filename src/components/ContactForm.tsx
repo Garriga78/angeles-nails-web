@@ -15,16 +15,24 @@ const ContactForm: React.FC = () => {
         setStatus('sending');
 
         try {
-            const response = await fetch('https://formspree.io/f/xdkobpgz', {
+            // Preparar datos para Web3Forms
+            const formDataToSend = new FormData();
+            formDataToSend.append('access_key', '8fa9e30d-1c15-461f-ab32-74eacbdc1f37');
+            formDataToSend.append('name', formData.name);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('phone', formData.phone);
+            formDataToSend.append('subject', `Contacto Angeles Nails - ${formData.subject}`);
+            formDataToSend.append('message', formData.message);
+            formDataToSend.append('to', 'mimate@angelesnails.es');
+
+            const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formData)
+                body: formDataToSend
             });
 
-            if (response.ok) {
+            const data = await response.json();
+
+            if (data.success) {
                 setStatus('success');
                 setFormData({
                     name: '',
@@ -44,6 +52,7 @@ const ContactForm: React.FC = () => {
                 setStatus('error');
             }
         } catch (error) {
+            console.error('Error:', error);
             setStatus('error');
         }
     };
