@@ -24,15 +24,23 @@ const ContactForm: React.FC = () => {
 
             const subjectText = subjectMap[formData.subject] || formData.subject;
 
-            // Preparar datos para Web3Forms
+            // Preparar datos para Web3Forms con campos en castellano
             const formDataToSend = new FormData();
             formDataToSend.append('access_key', '8fa9e30d-1c15-461f-ab32-74eacbdc1f37');
-            formDataToSend.append('name', formData.name);
-            formDataToSend.append('email', formData.email);
-            formDataToSend.append('phone', formData.phone);
+
+            // Campos personalizados en castellano
+            formDataToSend.append('Nombre', formData.name);
+            formDataToSend.append('Email', formData.email);
+            formDataToSend.append('Teléfono', formData.phone);
+            formDataToSend.append('Asunto', subjectText);
+            formDataToSend.append('Mensaje', formData.message);
+
+            // Configuración del email
             formDataToSend.append('subject', `Contacto Angeles Nails - ${subjectText}`);
-            // Incluir el asunto en el mensaje para que aparezca en el cuerpo del email
-            formDataToSend.append('message', `ASUNTO: ${subjectText}\n\n${formData.message}`);
+            formDataToSend.append('from_name', formData.name);
+            formDataToSend.append('replyto', formData.email);
+
+            // Email destino
             formDataToSend.append('to', 'mimate@angelesnails.es');
 
             const response = await fetch('https://api.web3forms.com/submit', {
